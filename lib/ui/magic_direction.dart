@@ -1,0 +1,1 @@
+enum MagicDirection { vertical, horizental }
