@@ -21,21 +21,23 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int index = 0;
-  List<Widget> pages = [
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    index = 2;
+  }
+  
+
+  @override
+  Widget build(BuildContext context) {
+      List<Widget> pages = [
     FavoriteUI(),
     Post(),
     ProfileUi(),
     CoursesUi(),
     BooksUI(),
   ];
-  @override
-  // ignore: must_call_super
-  void initState() {
-    index = 2;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xff7a489d),
         resizeToAvoidBottomInset: false, //لح

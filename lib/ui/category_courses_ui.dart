@@ -1,5 +1,3 @@
-import 'package:ajyal/ui/magic_direction.dart';
-import 'package:ajyal/ui/magic_ui.dart';
 import 'package:clickable_list_wheel_view/clickable_list_wheel_widget.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -312,22 +310,21 @@ class CoursesUi extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
-                        child: Card(
-                          elevation: 7,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: const [
-                              Text('تعرف أكثر على الكورس',
+                        child: Center(
+                          child: Container(
+                            height: 40,
+                            width: 150,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              color: Color(0xff26da76),
+                            ),
+                            child: const Center(
+                              child: Text('تعرف أكثر  ',
                                   style: TextStyle(
-                                      color: Color(0xff26da76),
+                                      color: Color(0xff665589),
                                       fontWeight: FontWeight.bold)),
-                              Icon(
-                                Icons.emoji_emotions_outlined,
-                                color: Color(0xff665589),
-                              )
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -636,15 +633,31 @@ class _LectCourseState extends State<LectCourse> {
                         borderRadius: BorderRadius.circular(15.0)),
                     minimumSize: const Size(100, 40), //////// HERE
                   ),
-                  onPressed: () => showDialog(
+                  onPressed: () =>  showDialog(
                       context: context,
 
-                      //   barrierColor: Color(0xffc4e5ff),
+                    
                       builder: (ctxt) {
                         return MediaQuery.of(context).size.height /
-                                    MediaQuery.of(context).size.width >
+                                    MediaQuery.of(context).size.width <
                                 1
-                            ? AlertDialog(
+                            ? Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.9,
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xff665589),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(60),
+                                              topRight: Radius.circular(60))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 16.0, bottom: 8),
+                                        child: Video(
+                                          i: i,
+                                        ),
+                                      ))
+                               : AlertDialog(
                                 contentPadding: const EdgeInsets.all(0),
                                 insetPadding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.1,
@@ -657,7 +670,25 @@ class _LectCourseState extends State<LectCourse> {
                                 content: StatefulBuilder(builder:
                                     (BuildContext context,
                                         StateSetter setState) {
-                                  return Container(
+                                  return MediaQuery.of(context).size.height /
+                                    MediaQuery.of(context).size.width <
+                                1
+                            ? Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.9,
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xff665589),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(60),
+                                              topRight: Radius.circular(60))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 16.0, bottom: 8),
+                                        child: Video(
+                                          i: i,
+                                        ),
+                                      )): Container(
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.9,
@@ -722,7 +753,7 @@ class _LectCourseState extends State<LectCourse> {
                                                         icon: Icons.check,
                                                         backgroundColor:
                                                             Color(0xff26da76),
-                                                        text: Text('تم'),
+                                                        text: Text('  تم'),
                                                       ),
                                                       rollingInfoLeft:
                                                           const RollingIconInfo(
@@ -740,6 +771,7 @@ class _LectCourseState extends State<LectCourse> {
                                             SingleChildScrollView(
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
+                                                  top: 15,
                                                     right: 16.0, left: 16),
                                                 child: Text(
                                                     "${widget.c?.lectures?[i].description}",
@@ -750,15 +782,7 @@ class _LectCourseState extends State<LectCourse> {
                                             ),
                                           ]));
                                 }))
-                            : Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, bottom: 8),
-                                  child: Video(
-                                    i: i,
-                                  ),
-                                ),
-                              );
+                            ;
                       }),
                   child: Text("${widget.c?.lectures?[i].title}",
                       style: const TextStyle(
@@ -768,9 +792,9 @@ class _LectCourseState extends State<LectCourse> {
               : ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white10,
-                    onPrimary: const Color(0xff665589),
-                    shadowColor: const Color(0xff665589),
-                    elevation: 3,
+                    onPrimary:  Colors.white10,
+                    shadowColor:  Colors.white10,
+               
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     minimumSize: const Size(100, 40), //////// HERE
@@ -780,9 +804,9 @@ class _LectCourseState extends State<LectCourse> {
                     children: [
                       Text("${widget.c?.lectures?[i].title}",
                           style: const TextStyle(
-                              color: Color(0xff26da76),
+                              color: Color(0xff665589),
                               fontWeight: FontWeight.bold)),
-                      //  Icon(Icons.block_rounded,color: Colors.red.shade900,)
+                   
                     ],
                   ),
                 ),

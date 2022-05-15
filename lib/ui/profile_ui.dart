@@ -14,7 +14,7 @@ import 'package:ajyal/bloc/bloc_all_user/bloc/alluser_bloc.dart';
 import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 
 class ProfileUi extends StatelessWidget {
- const ProfileUi({Key? key}) : super(key: key);
+ ProfileUi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,25 +275,7 @@ class Center1 extends StatelessWidget {
                     )),
               ],
             ),
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: Text("العمر : ",
-                      style: TextStyle(
-                        color: Color(0xff665589),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      )),
-                ),
-                Text("23  ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    )),
-              ],
-            ),
+            
             Row(
               children: const [
                 Padding(
@@ -305,7 +287,7 @@ class Center1 extends StatelessWidget {
                         fontSize: 17,
                       )),
                 ),
-                Text("أشرق وكأن الكون كله لك ...  ",
+                Text(" أشرق وكأن الكون كله لك ...  ",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -336,26 +318,29 @@ class End extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 3,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          )),
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Center(
-                          child: Text(" أوائل القراءة : ",
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(
-                                color: Color(0xff665589),
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height /
-                                            MediaQuery.of(context).size.width >
-                                        1
-                                    ? 22
-                                    : 10,
-                              )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0,right: 4),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: Color(0xff26da76),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            )),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Center(
+                            child: Text(" أوائل القراءة : ",
+                                textDirection: TextDirection.rtl,
+                                style: TextStyle(
+                                  color: Color(0xff665589),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.height /
+                                              MediaQuery.of(context).size.width >
+                                          1
+                                      ? 22
+                                      : 10,
+                                )),
+                          ),
                         ),
                       ),
                     )),
@@ -368,26 +353,29 @@ class End extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 3,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          )),
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Center(
-                          child: Text(" أوائل الكورسات : ",
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(
-                                color: Color(0xff665589),
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.height /
-                                            MediaQuery.of(context).size.width >
-                                        1
-                                    ? 22
-                                    : 10,
-                              )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0,left: 4),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: Color(0xff26da76),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            )),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Center(
+                            child: Text(" أوائل الكورسات : ",
+                                textDirection: TextDirection.rtl,
+                                style: TextStyle(
+                                  color: Color(0xff665589),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.height /
+                                              MediaQuery.of(context).size.width >
+                                          1
+                                      ? 22
+                                      : 10,
+                                )),
+                          ),
                         ),
                       ),
                     )),

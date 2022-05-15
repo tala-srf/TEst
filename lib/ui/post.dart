@@ -126,8 +126,7 @@ class _ListPostsState extends State<ListPosts> {
                                     width: double.infinity,
                                     height: 300,
                                   )
-                                : Image.asset(
-                                    "assets/image/holding-smartphone.png"),
+                                :Text(""),
                             ContainerWidget(
                               createcommentController:
                                   widget.createcommentController,
@@ -293,7 +292,9 @@ class CommentButton1 extends StatelessWidget {
                                               color:
                                                   Colors.black.withAlpha(155)),
                                         ),
-                                        trailing: IconButton(
+                                        trailing:(stat.data.id ==
+                                                state.posts[index]
+                                                    .comments?[inde].user?.id)? IconButton(
                                           icon:
                                               const Icon(Icons.delete_forever),
                                           tooltip: 'Navigation menu',
@@ -309,9 +310,7 @@ class CommentButton1 extends StatelessWidget {
                                                         .comments?[inde].id ??
                                                     0);
 
-                                            if (stat.data.id ==
-                                                state.posts[index]
-                                                    .comments?[inde].user?.id) {
+                                           
                                               showDialog(
                                                   context: context,
                                                   // barrierColor: Color(0xffc4e5ff),
@@ -322,15 +321,10 @@ class CommentButton1 extends StatelessWidget {
                                                       post: state.posts[index],
                                                     );
                                                   });
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                      content: Text(
-                                                          " ...لا يمكنك حذف التعليق")));
-                                            }
+                                           
                                           },
                                           // null disables the button
-                                        ),
+                                        ): null,
                                       ),
                                     ),
                                   ),

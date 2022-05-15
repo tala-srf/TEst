@@ -2,9 +2,9 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:ajyal/main.dart';
+
 import 'package:ajyal/models/me.dart';
-import 'package:ajyal/models/signin_model.dart';
+
 import 'package:ajyal/service/data_signin_service.dart';
 import 'package:ajyal/service/signin_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';

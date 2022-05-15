@@ -20,15 +20,15 @@ class _SplashUI1State extends State<SplashUI1> {
     super.initState();
 
     timer =
-        Timer.periodic(Duration(seconds: 4), (_) => setState(() => count += 1));
-    timer = Timer.periodic(
-        Duration(seconds: 8),
-        (_) =>
-            setState(() => Navigator.of(context).popAndPushNamed('/splash2')));
+        Timer.periodic(const Duration(seconds: 4), (_) => setState(() => count += 1));
+     timer = Timer.periodic(
+         const Duration(seconds: 4),
+         (_) =>
+             setState(() => Navigator.of(context).popAndPushNamed('/splash2')));
   }
 
   Widget _renderWidget() {
-    return count == 1 ? _renderWidget2() : _renderWidget1();
+    return count == 0 ? _renderWidget1() : _renderWidget2();
   }
 
   @override
@@ -68,7 +68,7 @@ class _SplashUI1State extends State<SplashUI1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff7a489d),
+        backgroundColor: const Color(0xff7a489d),
         body: Container(
             height: double.infinity,
             width: double.infinity,
@@ -83,13 +83,13 @@ class _SplashUI1State extends State<SplashUI1> {
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return SlideTransition(
                   position: Tween(
-                    begin: Offset(-1, 0),
-                    end: Offset(0.0, 0.0),
+                    begin: const Offset(-1, 0),
+                    end: const Offset(0.0, 0.0),
                   ).animate(animation),
                   child: child,
                 );
               },
-              child: _renderWidget(),
+              child: _renderWidget1(),
             )));
   }
 }

@@ -1,10 +1,10 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:ajyal/ui/pdf_view_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ajyal/bloc/bloc_account/bloc/account_bloc.dart';
 import 'package:ajyal/bloc/bloc_all_user/bloc/alluser_bloc.dart';
-
 
 import 'package:ajyal/bloc/bloc_auth/bloc/auth_bloc.dart';
 import 'package:ajyal/bloc/bloc_books/bloc/books_bloc.dart';
@@ -42,6 +42,8 @@ main() async {
   ));
 }
 
+@immutable
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   MyApp({
     Key? key,
@@ -80,7 +82,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => CoursesblocBloc()),
         BlocProvider(create: (_) => BooksBloc()),
-        BlocProvider(create: (_)=>AlluserBloc())
+        BlocProvider(create: (_) => AlluserBloc())
       ],
       child: MainApp(
         token: token,
@@ -92,7 +94,6 @@ class MyApp extends StatelessWidget {
 // ignore: must_be_immutable
 class MainApp extends StatelessWidget {
   MainApp({
-
     Key? key,
     required String? token,
   }) : super(key: key);
@@ -101,13 +102,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     Widget example1 = SplashScreenView(
       navigateRoute: FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.toString() == 'EMPTY_TOKEN') {
-              return SplashUI1();
+              return const SplashUI1();
             } else {
               return Home();
             }
@@ -121,18 +121,16 @@ class MainApp extends StatelessWidget {
       imageSize: 130,
       imageSrc: "assets/image/Asset 5 (2).png",
       backgroundColor: const Color(0xff7a489d),
-
     );
     return MaterialApp(
-      
-
-       debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
+        // ignore: prefer_const_literals_to_create_immutables
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [const Locale('ar', '')],
+        supportedLocales: const [Locale('ar', '')],
 
         //debugShowCheckedModeBanner: false,
         locale: const Locale('ar'),
@@ -147,8 +145,7 @@ class MainApp extends StatelessWidget {
           '/splash3': (ctxt) => Splash3UI(),
           '/newaccount': (ctxt) => NewAcccont(),
           "/splash1": (cxtc) => SplashUI1(),
-           "/pdf": (cxtc) => PdfView(),
-
+          "/pdf": (cxtc) => PdfView(),
         },
         home: example1);
   }
@@ -175,10 +172,16 @@ class MainApp extends StatelessWidget {
           onSurface: Colors.white,
           surface: Colors.black),
       textTheme: const TextTheme(
-          headline1:
-              const TextStyle(color: Color(0xffB183CE), fontFamily: 'Tahoma')),
+          headline1: TextStyle(color: Color(0xffB183CE), fontFamily: 'Tahoma')),
       elevatedButtonTheme: ElevatedButtonThemeData(
+        
         style: ButtonStyle(
+           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+     
+    )
+  ),
           textStyle: MaterialStateProperty.all(const TextStyle(
               color: Color(0xff26da76), fontWeight: FontWeight.bold)),
           backgroundColor: MaterialStateProperty.all(const Color(0xffffffff)),

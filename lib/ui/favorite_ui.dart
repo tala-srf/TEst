@@ -1,3 +1,4 @@
+
 import 'package:ajyal/ui/magic_direction.dart';
 import 'package:ajyal/ui/magic_ui.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,14 @@ import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 import 'package:ajyal/bloc/bloc_posts/bloc/posts_bloc.dart';
 import 'package:ajyal/models/courses_model.dart';
 import 'package:ajyal/models/post_model.dart';
-import 'package:ajyal/ui/post.dart';
+
 import 'package:rolling_switch/rolling_switch.dart';
 import 'package:video_player/video_player.dart';
 
 class FavoriteUI extends StatelessWidget {
- FavoriteUI({Key? key}) : super(key: key);
+  FavoriteUI({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +51,22 @@ class FavoriteUI extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.bottomRight,
                       child: Row(
-                        children: const [
-                          Text(" المنشورات المفضلة",
+                        children:const [
+                           Text(" المنشورات المفضلة",
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
                                 color: Color(0xff665589),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
                               )),
+                        
                           //  ButtonWidget()
                         ],
                       ),
                     ),
                   ),
                 ),
-                Expanded(flex: 8, child: Section2())
+                const Expanded(flex: 8, child: Section2())
               ],
             )),
         Expanded(
@@ -88,7 +92,7 @@ class FavoriteUI extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(flex: 8, child: Section3()),
+                const Expanded(flex: 8, child: Section3()),
               ],
             ))
       ],
@@ -434,23 +438,24 @@ class Section3 extends StatelessWidget {
                                       enrol++) {
                                     return Column(
                                       children: [
-                                     const   Expanded(
+                                        const Expanded(
                                           flex: 1,
                                           child: Padding(
-                                              padding: EdgeInsets.all(
-                                                 0)),
+                                              padding: EdgeInsets.all(0)),
                                         ),
                                         Expanded(
                                           flex: 9,
                                           child: Container(
-                                             
                                               decoration: const BoxDecoration(
                                                   color: Color(0xff665589),
-                                                  borderRadius: BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(60),
-                                                      topRight:
-                                                          Radius.circular(60))),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  60),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  60))),
                                               child: // ListView.builder(
                                                   ///itemCount: 1,
                                                   // itemBuilder: (context, asd) {
@@ -462,7 +467,8 @@ class Section3 extends StatelessWidget {
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
                                                     Expanded(
                                                       flex: 1,
@@ -484,15 +490,17 @@ class Section3 extends StatelessWidget {
                                                                     top: 10),
                                                             child: Text(
                                                                 '${state.category[index].courses![ind].name} ',
-                                                                style:  TextStyle(
-                                                                    color:const Color(
+                                                                style: TextStyle(
+                                                                    color: const Color(
                                                                         0xff26da76),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                       ( MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1)
-          ? 20:10)),
+                                                                        (MediaQuery.of(context).size.height / MediaQuery.of(context).size.width >
+                                                                                1)
+                                                                            ? 20
+                                                                            : 10)),
                                                           ),
                                                           Padding(
                                                             padding:
@@ -542,14 +550,15 @@ class Section3 extends StatelessWidget {
                                                                 Text(
                                                                     "الاشتراك في الكورس",
                                                                     style: TextStyle(
-                                                                        color:const Color(
+                                                                        color: const Color(
                                                                             0xff26da76),
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .bold,
-                                                                        fontSize:
-                                                                             MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1
-          ? 13:6)),
+                                                                        fontSize: MediaQuery.of(context).size.height / MediaQuery.of(context).size.width >
+                                                                                1
+                                                                            ? 13
+                                                                            : 6)),
                                                               ],
                                                             ),
                                                           ),
@@ -568,25 +577,32 @@ class Section3 extends StatelessWidget {
                                                     Expanded(
                                                       flex: 1,
                                                       child: Padding(
-                                                        padding:const EdgeInsets.only(
-                                                            right: 10.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
                                                         child: Text(
                                                             "لمحة عن الكورس",
                                                             style: TextStyle(
-                                                                color:const Color(
+                                                                color: const Color(
                                                                     0xff26da76),
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
-                                                                fontSize:  MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1
-          ? 23:10)),
+                                                                fontSize:
+                                                                    MediaQuery.of(context).size.height /
+                                                                                MediaQuery.of(context).size.width >
+                                                                            1
+                                                                        ? 23
+                                                                        : 10)),
                                                       ),
                                                     ),
                                                     Expanded(
                                                       flex: 3,
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            const EdgeInsets
+                                                                    .only(
                                                                 right: 16.0,
                                                                 left: 16),
                                                         child: ListView(
@@ -608,17 +624,24 @@ class Section3 extends StatelessWidget {
                                                     Expanded(
                                                       flex: 1,
                                                       child: Padding(
-                                                        padding:const EdgeInsets.only(
-                                                            right: 10.0),
-                                                        child: Text("فصول الكورس",
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Text(
+                                                            "فصول الكورس",
                                                             style: TextStyle(
-                                                                color:const Color(
+                                                                color: const Color(
                                                                     0xff26da76),
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
-                                                                fontSize:  (MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1)
-          ? 23 :10)),
+                                                                fontSize:
+                                                                    (MediaQuery.of(context).size.height /
+                                                                                MediaQuery.of(context).size.width >
+                                                                            1)
+                                                                        ? 23
+                                                                        : 10)),
                                                       ),
                                                     ),
                                                     Expanded(
@@ -650,7 +673,7 @@ class Section3 extends StatelessWidget {
                               ),
                               elevation: 10,
                               // has value when shape is null
-                              shadowColor:const Color(0xff190836),
+                              shadowColor: const Color(0xff190836),
                               clipBehavior: Clip.antiAlias,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
@@ -738,14 +761,13 @@ class Section3 extends StatelessWidget {
                           )));
                     }
                   }
-                } 
-                return 
-                ListView(
-                  scrollDirection:(MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1)
-          ? Axis.horizontal
-          : Axis.vertical,
-                  
-      
+                }
+                return ListView(
+                  scrollDirection: (MediaQuery.of(context).size.height /
+                              MediaQuery.of(context).size.width >
+                          1)
+                      ? Axis.horizontal
+                      : Axis.vertical,
                   children: _children,
                 );
 
@@ -767,7 +789,9 @@ class Section3 extends StatelessWidget {
 }
 
 class ButtonWidget extends StatefulWidget {
-  ButtonWidget({Key? key}) : super(key: key);
+  ButtonWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -778,11 +802,9 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
-          setState(() {
-            Post();
-          });
+         
         },
-        child: Text("عرض الكل <<"));
+        child: const Text("عرض الكل <<"));
   }
 }
 
@@ -826,129 +848,139 @@ class _LectCourseState extends State<LectCourse> {
 
                       //   barrierColor: Color(0xffc4e5ff),
                       builder: (ctxt) {
-                        return MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1
-          ? AlertDialog(
-                            contentPadding: const EdgeInsets.all(0),
-                            insetPadding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.1,
-                            ),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(60.0),
-                                    topRight: Radius.circular(60.0))),
-                            scrollable: true,
-                            content: StatefulBuilder(builder:
-                                (BuildContext context, StateSetter setState) {
-                              return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.83,
-                                  decoration: const BoxDecoration(
-                                      color: Color(0xff665589),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(60),
-                                          topRight: Radius.circular(60))),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 30, top: 10),
-                                          child: Text(
-                                              '${widget.c?.lectures?[i].title} ',
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20)),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 16.0, bottom: 8),
-                                          child: Video(
-                                            i: i,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10.0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              const Text("مختصر الفصل",
-                                                  style: TextStyle(
-                                                      color: Color(0xff26da76),
+                        return MediaQuery.of(context).size.height /
+                                    MediaQuery.of(context).size.width >
+                                1
+                            ? AlertDialog(
+                                contentPadding: const EdgeInsets.all(0),
+                                insetPadding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.1,
+                                ),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(60.0),
+                                        topRight: Radius.circular(60.0))),
+                                scrollable: true,
+                                content: StatefulBuilder(builder:
+                                    (BuildContext context,
+                                        StateSetter setState) {
+                                  return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.83,
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xff665589),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(60),
+                                              topRight: Radius.circular(60))),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 30, top: 10),
+                                              child: Text(
+                                                  '${widget.c?.lectures?[i].title} ',
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 23)),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10.0),
-                                                child: RollingSwitch.icon(
-                                                  enableDrag: true,
-                                                  onChanged: (bool state) {},
-                                                  rollingInfoRight:
-                                                      const RollingIconInfo(
-                                                    icon: Icons.check,
-                                                    backgroundColor:
-                                                        Color(0xff26da76),
-                                                    text: Text('تم'),
-                                                  ),
-                                                  rollingInfoLeft:
-                                                      const RollingIconInfo(
-                                                    icon: Icons
-                                                        .watch_later_outlined,
-                                                    backgroundColor:
-                                                        Colors.grey,
-                                                    text: Text('أشاهد'),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 16.0, left: 16),
-                                            child: Text(
-                                                "${widget.c?.lectures?[i].description}",
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17)),
-                                          ),
-                                        ),
-
-                                        //   if (controller != null &&
-                                        //    controller.value.isInitialized)
-                                        // IconButton(
-                                        // icon: Icon(
-
-                                        // isMuted
-                                        //   ? Icons.volume_mute
-                                        // : Icons.volume_up,
-                                        //color: Color(0xff26da76),
-                                        //size: 20,
-                                        //  ),
-                                        //onPressed: () => controller
-                                        //  .setVolume(isMuted ? 1 : 0),
-                                        //),
-                                      ]));
-                            })): Container(
-                              child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 16.0, bottom: 8),
-                                            child: Video(
-                                              i: i,
+                                                      fontSize: 20)),
                                             ),
-                                          ),
-                            );
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16.0, bottom: 8),
+                                              child: Video(
+                                                i: i,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  const Text("مختصر الفصل",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xff26da76),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 23)),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: RollingSwitch.icon(
+                                                      enableDrag: true,
+                                                      onChanged:
+                                                          (bool state) {},
+                                                      rollingInfoRight:
+                                                          const RollingIconInfo(
+                                                        icon: Icons.check,
+                                                        backgroundColor:
+                                                            Color(0xff26da76),
+                                                        text: Text('تم'),
+                                                      ),
+                                                      rollingInfoLeft:
+                                                          const RollingIconInfo(
+                                                        icon: Icons
+                                                            .watch_later_outlined,
+                                                        backgroundColor:
+                                                            Colors.grey,
+                                                        text: Text('أشاهد'),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SingleChildScrollView(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 16.0, left: 16),
+                                                child: Text(
+                                                    "${widget.c?.lectures?[i].description}",
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 17)),
+                                              ),
+                                            ),
+
+                                            //   if (controller != null &&
+                                            //    controller.value.isInitialized)
+                                            // IconButton(
+                                            // icon: Icon(
+
+                                            // isMuted
+                                            //   ? Icons.volume_mute
+                                            // : Icons.volume_up,
+                                            //color: Color(0xff26da76),
+                                            //size: 20,
+                                            //  ),
+                                            //onPressed: () => controller
+                                            //  .setVolume(isMuted ? 1 : 0),
+                                            //),
+                                          ]));
+                                }))
+                            : Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 16.0, bottom: 8),
+                                  child: Video(
+                                    i: i,
+                                  ),
+                                ),
+                              );
                       }),
                   child: Text("${widget.c?.lectures?[i].title}",
                       style: const TextStyle(

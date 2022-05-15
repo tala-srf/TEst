@@ -22,18 +22,18 @@ class _PdfView extends State<PdfView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('القرآن نسخة شخصية'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.bookmark,
-              color: Colors.white,
-              semanticLabel: 'Bookmark',
-            ),
-            onPressed: () {
-              _pdfViewerKey.currentState?.openBookmarkView();
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.bookmark,
+        //       color: Colors.white,
+        //       semanticLabel: 'Bookmark',
+        //     ),
+        //     onPressed: () {
+        //       _pdfViewerKey.currentState?.openBookmarkView();
+        //     },
+        //   ),
+        // ],
       ),
       body: SfPdfViewer.asset(
         'assets/pdf/asdf.pdf',

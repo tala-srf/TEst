@@ -6,8 +6,9 @@ import 'package:lottie/lottie.dart';
 
 import 'package:ajyal/bloc/bloc_auth/bloc/auth_bloc.dart';
 import 'package:ajyal/models/me.dart';
-import 'package:ajyal/ui/new_account_ui.dart';
 
+
+// ignore: must_be_immutable
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
   TextEditingController emailController = TextEditingController();
@@ -98,7 +99,7 @@ class SignIn extends StatelessWidget {
 }
 
 class SignInForm extends StatelessWidget {
-  SignInForm({
+  const SignInForm({
     Key? key,
     required this.emailController,
     required this.passwordController,
@@ -109,89 +110,87 @@ class SignInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30),
-      child: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) => Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text("مرحباً بك مجدداً ",
-                textDirection: TextDirection.rtl,
-                style: TextStyle(
-                  color: Color(0xff26da76),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
-                )),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: 280,
-                height: 50,
-                child: TextField(
-                  style: const TextStyle(color: Colors.black),
-                  decoration: const InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                    ),
-                    hintText: " اسم المستخدم",
+    return ListView.builder(
+      itemCount: 1,
+      itemBuilder: (context, index) => Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text("مرحباً بك مجدداً ",
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                color: Color(0xff26da76),
+                fontWeight: FontWeight.bold,
+                fontSize: 32,
+              )),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              width: 280,
+              height: 50,
+              child: TextField(
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
-                  controller: emailController,
+                  hintText: " اسم المستخدم",
                 ),
+                controller: emailController,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: 280,
-                height: 50,
-                child: TextField(
-                  obscureText: true,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: const InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                    ),
-                    hintText: " كلمة المرور",
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            // ignore: sized_box_for_whitespace
+            child: Container(
+              width: 280,
+              height: 50,
+              child: TextField(
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
-                  controller: passwordController,
+                  hintText: " كلمة المرور",
                 ),
+                controller: passwordController,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                final user = AuthModel(
-                    rememberMe: true,
-                    username: emailController.text,
-                    password: passwordController.text);
-                BlocProvider.of<AuthBloc>(context).add(SignInEvent(user: user));
-              },
-              child: const Text('تسجيل الدخول',
-                  style: TextStyle(
-                      color: Color(0xff26da76), fontWeight: FontWeight.bold)),
-            ),
-            const Text("مستخدم جديد؟",
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final user = AuthModel(
+                  rememberMe: true,
+                  username: emailController.text,
+                  password: passwordController.text);
+              BlocProvider.of<AuthBloc>(context).add(SignInEvent(user: user));
+            },
+            child: const Text('تسجيل الدخول',
                 style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w700)),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).popAndPushNamed("/newaccount");
-              
-              },
-              child: const Text('بإمكانك إنشاء حساب من هنا',
-                  style: TextStyle(
-                      color: Color(0xff26da76), fontWeight: FontWeight.w700)),
-            ),
-          ],
-        ),
+                    color: Color(0xff26da76), fontWeight: FontWeight.bold)),
+          ),
+          const Text("مستخدم جديد؟",
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w700)),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).popAndPushNamed("/newaccount");
+            
+            },
+            child: const Text('بإمكانك إنشاء حساب من هنا',
+                style: TextStyle(
+                    color: Color(0xff26da76), fontWeight: FontWeight.w700)),
+          ),
+        ],
       ),
     );
   }

@@ -48,7 +48,7 @@ const Splash3UI({Key? key}) : super(key: key);
                       Hero(
                           tag: "element",
                           child: AnimatedContainer(
-                            duration: Duration(seconds: 5),
+                            duration: const Duration(seconds: 5),
                             child: Material(
                               elevation: 8,
                               borderRadius: BorderRadius.circular(28),

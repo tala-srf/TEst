@@ -11,13 +11,16 @@ class SplashUI2 extends StatefulWidget {
 class _SplashUI2State extends State<SplashUI2> {
   int x = 0;
 
+  // ignore: prefer_final_fields
   List _select = [
     Screen1(),
     Screen2(),
     Screen3(),
   ];
+  @override
   void initState() {
     super.initState();
+    // ignore: unused_local_variable
     Widget _widge = _select[0];
   }
 
@@ -25,6 +28,7 @@ class _SplashUI2State extends State<SplashUI2> {
     if (x < 2) {
       x++;
       setState(() {
+        // ignore: unused_local_variable
         Widget _widge = _select[x];
       });
     }
@@ -34,6 +38,7 @@ class _SplashUI2State extends State<SplashUI2> {
     if (x > 0) {
       x--;
       setState(() {
+        // ignore: unused_local_variable
         Widget _widge = _select[x];
       });
     }

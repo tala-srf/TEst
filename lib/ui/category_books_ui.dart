@@ -18,23 +18,20 @@ class BooksUI extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<BooksBloc>(context).add(LoadBooksEvent());
     BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
-  
 
-   
     return BlocBuilder<BooksBloc, BooksState>(
       builder: (context, state) {
         if (state is LoadingBooks) {
           return Center(child: Lottie.asset("assets/lottie/loading.json"));
         } else if (state is FetchBooks) {
           List<BooksModel> c = state.categoryBook;
-  List<Widget> _tab = [];
-    List<Widget> _view = [];
+          List<Widget> _tab = [];
+          List<Widget> _view = [];
           for (int index = 0; index < c.length; index++) {
             List<Books>? s = state.categoryBook[index].books;
 
             _tab.add(Text("${state.categoryBook[index].name}"));
             List<Widget> _children = [];
-             
 
             _view.add(GridView(
               shrinkWrap: true,
@@ -87,12 +84,12 @@ class BooksUI extends StatelessWidget {
                                         AssetImage("assets/image/diary.png"))),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
+                            padding: const EdgeInsets.only(right: 8.0),
                             child: Text('${s[ind].name} ',
                                 style: const TextStyle(
                                     color: Color(0xff26da76),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14)),
+                                    fontSize: 16)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0, left: 8),
@@ -102,25 +99,24 @@ class BooksUI extends StatelessWidget {
                                   color: Color(0xff665589), fontSize: 15),
                             ),
                           ),
-                          Card(
-                            elevation: 7,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
-                              children: const [
-                                Text(
-                                  'تعرف أكثر على الكتاب',
-                                  style: TextStyle(
-                                      color: Color(0xff26da76),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: Container(
+                                height: 30,
+                                width: 100,
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: Color(0xff26da76),
                                 ),
-                                Icon(
-                                  Icons.emoji_emotions_outlined,
-                                  color: Color(0xff665589),
-                                )
-                              ],
+                                child: const Center(
+                                  child: Text('تعرف أكثر',
+                                      style: TextStyle(
+                                          color: Color(0xff665589),
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -159,7 +155,6 @@ class BooksUI extends StatelessWidget {
         }
       },
     );
-  
   }
 }
 
@@ -429,6 +424,7 @@ class WidgetOneBook extends StatelessWidget {
                                     const EdgeInsets.only(top: 10.0, left: 30),
                                 child: ElevatedButton(
                                   style: ButtonStyle(
+                                   
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               const Color(0xff26da76))),
