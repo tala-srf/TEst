@@ -14,6 +14,7 @@ import 'package:ajyal/models/courses_model.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 class CoursesUi extends StatelessWidget {
   CoursesUi({Key? key}) : super(key: key);
@@ -620,6 +621,7 @@ class _LectCourseState extends State<LectCourse> {
       ),
       itemCount: widget.c?.lectures?.length,
       itemBuilder: (BuildContext context, int i) {
+        Wakelock.enable();
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: widget.c?.lectures?[i].finished == "yes"
@@ -633,157 +635,161 @@ class _LectCourseState extends State<LectCourse> {
                         borderRadius: BorderRadius.circular(15.0)),
                     minimumSize: const Size(100, 40), //////// HERE
                   ),
-                  onPressed: () =>  showDialog(
-                      context: context,
-
-                    
-                      builder: (ctxt) {
-                        return MediaQuery.of(context).size.height /
-                                    MediaQuery.of(context).size.width <
-                                1
-                            ? Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.9,
-                                      decoration: const BoxDecoration(
-                                          color: Color(0xff665589),
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(60),
-                                              topRight: Radius.circular(60))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 16.0, bottom: 8),
-                                        child: Video(
-                                          i: i,
-                                        ),
-                                      ))
-                               : AlertDialog(
-                                contentPadding: const EdgeInsets.all(0),
-                                insetPadding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * 0.1,
-                                ),
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(60.0),
-                                        topRight: Radius.circular(60.0))),
-                                scrollable: true,
-                                content: StatefulBuilder(builder:
-                                    (BuildContext context,
-                                        StateSetter setState) {
-                                  return MediaQuery.of(context).size.height /
-                                    MediaQuery.of(context).size.width <
-                                1
-                            ? Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.9,
-                                      decoration: const BoxDecoration(
-                                          color: Color(0xff665589),
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(60),
-                                              topRight: Radius.circular(60))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 16.0, bottom: 8),
-                                        child: Video(
-                                          i: i,
-                                        ),
-                                      )): Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.9,
-                                      decoration: const BoxDecoration(
-                                          color: Color(0xff665589),
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(60),
-                                              topRight: Radius.circular(60))),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 30, top: 10),
-                                              child: Text(
-                                                  '${widget.c?.lectures?[i].title} ',
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20)),
-                                            ),
-                                            Padding(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (ctxt) {
+                          return MediaQuery.of(context).size.height /
+                                      MediaQuery.of(context).size.width <
+                                  1
+                              ? Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.9,
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xff665589),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(60),
+                                          topRight: Radius.circular(60))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 16.0, bottom: 8),
+                                    child: Video(
+                                      i: i,
+                                    ),
+                                  ))
+                              : AlertDialog(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  insetPadding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.1,
+                                  ),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(60.0),
+                                          topRight: Radius.circular(60.0))),
+                                  scrollable: true,
+                                  content: StatefulBuilder(builder:
+                                      (BuildContext context,
+                                          StateSetter setState) {
+                                    return MediaQuery.of(context).size.height /
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width <
+                                            1
+                                        ? Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.9,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xff665589),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(60),
+                                                    topRight:
+                                                        Radius.circular(60))),
+                                            child: Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 16.0, bottom: 8),
                                               child: Video(
                                                 i: i,
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 10.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: <Widget>[
-                                                  const Text("مختصر الفصل",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff26da76),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 23)),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: RollingSwitch.icon(
-                                                      enableDrag: true,
-                                                      onChanged:
-                                                          (bool state) {},
-                                                      rollingInfoRight:
-                                                          const RollingIconInfo(
-                                                        icon: Icons.check,
-                                                        backgroundColor:
-                                                            Color(0xff26da76),
-                                                        text: Text('  تم'),
-                                                      ),
-                                                      rollingInfoLeft:
-                                                          const RollingIconInfo(
-                                                        icon: Icons
-                                                            .watch_later_outlined,
-                                                        backgroundColor:
-                                                            Colors.grey,
-                                                        text: Text('أشاهد'),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            SingleChildScrollView(
-                                              child: Padding(
+                                            ))
+                                        : Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.9,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xff665589),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(60),
+                                                    topRight: Radius.circular(60))),
+                                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+                                              Padding(
                                                 padding: const EdgeInsets.only(
-                                                  top: 15,
-                                                    right: 16.0, left: 16),
+                                                    right: 30, top: 10),
                                                 child: Text(
-                                                    "${widget.c?.lectures?[i].description}",
+                                                    '${widget.c?.lectures?[i].title} ',
                                                     style: const TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 17)),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20)),
                                               ),
-                                            ),
-                                          ]));
-                                }))
-                            ;
-                      }),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 16.0, bottom: 8),
+                                                child: Video(
+                                                  i: i,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10.0),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: <Widget>[
+                                                    const Text("مختصر الفصل",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xff26da76),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 23)),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10.0),
+                                                      child: RollingSwitch.icon(
+                                                        enableDrag: true,
+                                                        onChanged:
+                                                            (bool state) {},
+                                                        rollingInfoRight:
+                                                            const RollingIconInfo(
+                                                          icon: Icons.check,
+                                                          backgroundColor:
+                                                              Color(0xff26da76),
+                                                          text: Text('  تم'),
+                                                        ),
+                                                        rollingInfoLeft:
+                                                            const RollingIconInfo(
+                                                          icon: Icons
+                                                              .watch_later_outlined,
+                                                          backgroundColor:
+                                                              Colors.grey,
+                                                          text: Text('أشاهد'),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              SingleChildScrollView(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 15,
+                                                          right: 16.0,
+                                                          left: 16),
+                                                  child: Text(
+                                                      "${widget.c?.lectures?[i].description}",
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 17)),
+                                                ),
+                                              ),
+                                            ]));
+                                  }));
+                        });
+                  },
                   child: Text("${widget.c?.lectures?[i].title}",
                       style: const TextStyle(
                           color: Color(0xff26da76),
@@ -792,9 +798,9 @@ class _LectCourseState extends State<LectCourse> {
               : ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white10,
-                    onPrimary:  Colors.white10,
-                    shadowColor:  Colors.white10,
-               
+                    onPrimary: Colors.white10,
+                    shadowColor: Colors.white10,
+
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     minimumSize: const Size(100, 40), //////// HERE
@@ -806,7 +812,6 @@ class _LectCourseState extends State<LectCourse> {
                           style: const TextStyle(
                               color: Color(0xff665589),
                               fontWeight: FontWeight.bold)),
-                   
                     ],
                   ),
                 ),

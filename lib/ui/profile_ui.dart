@@ -329,7 +329,7 @@ class End extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 8.0),
                           child: Center(
-                            child: Text(" أوائل القراءة : ",
+                            child: Text(" أوائل القراءة",
                                 textDirection: TextDirection.rtl,
                                 style: TextStyle(
                                   color: Color(0xff665589),
@@ -337,7 +337,7 @@ class End extends StatelessWidget {
                                   fontSize: MediaQuery.of(context).size.height /
                                               MediaQuery.of(context).size.width >
                                           1
-                                      ? 22
+                                      ? 20
                                       : 10,
                                 )),
                           ),
@@ -364,7 +364,7 @@ class End extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 8.0),
                           child: Center(
-                            child: Text(" أوائل الكورسات : ",
+                            child: Text(" أوائل الكورسات",
                                 textDirection: TextDirection.rtl,
                                 style: TextStyle(
                                   color: Color(0xff665589),
@@ -372,7 +372,7 @@ class End extends StatelessWidget {
                                   fontSize: MediaQuery.of(context).size.height /
                                               MediaQuery.of(context).size.width >
                                           1
-                                      ? 22
+                                      ? 20
                                       : 10,
                                 )),
                           ),
