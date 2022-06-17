@@ -30,7 +30,7 @@ dynamic Signin = (event, emit) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   sharedPreferences.setString('backend_user', user.toString());
   sharedPreferences.setString("backend_token", user?.token ?? 'EMPTY_TOKEN');
-  sharedPreferences.setString("login", user?.username ?? 'EMPTY_TOKEN');
+  sharedPreferences.setString("login", user?.email ?? 'EMPTY_TOKEN');
 
   user == null
       ? emit(FaildAuthState())

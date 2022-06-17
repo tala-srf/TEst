@@ -15,6 +15,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         NewAccountModel? account = await accountservice.createaccount(
           event.create, 
         );
+  //        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.setString('backend_user', account.toString());
+  // sharedPreferences.setString("backend_token", account?.token ?? 'EMPTY_TOKEN');
+  // sharedPreferences.setString("login", account?.email ?? 'EMPTY_TOKEN');
         emit(SuccessedAccontState(account));
     
       } catch (e) {

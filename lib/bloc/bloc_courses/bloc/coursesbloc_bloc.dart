@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:ajyal/models/courses_model.dart';
 import 'package:ajyal/service/courses_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 part 'coursesbloc_event.dart';
@@ -13,8 +14,9 @@ class CoursesblocBloc extends Bloc<CoursesblocEvent, CoursesblocState> {
     on<LoadCoursesEvent>((event, emit) async {
       emit(LoadingCourses());
       try {
-        List<CoursesModel> category =
-            await coursesService.gatallcategorecourses();
+        CoursesModel category =
+            await coursesService.gatallcategorecourses((await SharedPreferences.getInstance()).getString('backend_token') ??
+              'EMPTY_TOKEN',);
   
         emit(FetchCourses( category: category));
       } catch (e) {

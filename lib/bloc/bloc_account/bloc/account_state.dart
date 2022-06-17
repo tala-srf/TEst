@@ -7,7 +7,7 @@ class AccountInitial extends AccountState {}
 
 class SuccessedAccontState extends AccountState {
   NewAccountModel? account;
-  SuccessedAccontState(this.account);
+  SuccessedAccontState( this.account);
 }
 
 class FaildAccount extends AccountState{}

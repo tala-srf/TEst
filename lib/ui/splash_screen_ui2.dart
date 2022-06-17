@@ -1,3 +1,4 @@
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -20,6 +21,7 @@ class _SplashUI2State extends State<SplashUI2> {
   @override
   void initState() {
     super.initState();
+       AutoOrientation.portraitAutoMode();
     // ignore: unused_local_variable
     Widget _widge = _select[0];
   }

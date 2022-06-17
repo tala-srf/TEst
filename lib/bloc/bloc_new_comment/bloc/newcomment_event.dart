@@ -1,5 +1,5 @@
-part of 'newcomment_bloc.dart';
+// part of 'newcomment_bloc.dart';
 
-@immutable
-abstract class NewcommentEvent {}
- class NewCommentEvent extends NewcommentEvent{}
+// @immutable
+// abstract class NewcommentEvent {}
+//  class NewCommentEvent extends NewcommentEvent{}

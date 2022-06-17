@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-
-
 import 'package:ajyal/bloc/bloc_auth/bloc/auth_bloc.dart';
 import 'package:ajyal/models/me.dart';
-
-
 // ignore: must_be_immutable
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
@@ -138,7 +134,7 @@ class SignInForm extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
-                  hintText: " اسم المستخدم",
+                  hintText: " البريد الإلكتروني",
                 ),
                 controller: emailController,
               ),
@@ -169,8 +165,9 @@ class SignInForm extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               final user = AuthModel(
-                  rememberMe: true,
-                  username: emailController.text,
+              
+
+                  email: emailController.text,
                   password: passwordController.text);
               BlocProvider.of<AuthBloc>(context).add(SignInEvent(user: user));
             },

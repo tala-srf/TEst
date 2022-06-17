@@ -1,64 +1,67 @@
 class DataUserModel {
-  int? id;
-  String? login;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? imageUrl;
-  bool? activated;
-  String? langKey;
-  String? createdBy;
-  String? createdDate;
-  String? lastModifiedBy;
-  String? lastModifiedDate;
-  List<String>? authorities;
+  Data? data;
 
-  DataUserModel(
-      {this.id,
-      this.login,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.imageUrl,
-      this.activated,
-      this.langKey,
-      this.createdBy,
-      this.createdDate,
-      this.lastModifiedBy,
-      this.lastModifiedDate,
-      this.authorities});
+  DataUserModel({this.data});
 
   DataUserModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  int? id;
+  String? name;
+  Student? student;
+
+  Data({this.id, this.name, this.student});
+
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    login = json['login'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    email = json['email'];
-    imageUrl = json['imageUrl'];
-    activated = json['activated'];
-    langKey = json['langKey'];
-    createdBy = json['createdBy'];
-    createdDate = json['createdDate'];
-    lastModifiedBy = json['lastModifiedBy'];
-    lastModifiedDate = json['lastModifiedDate'];
-    authorities = json['authorities'].cast<String>();
+    name = json['name'];
+    student =
+        json['student'] != null ? new Student.fromJson(json['student']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['login'] = this.login;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['imageUrl'] = this.imageUrl;
-    data['activated'] = this.activated;
-    data['langKey'] = this.langKey;
-    data['createdBy'] = this.createdBy;
-    data['createdDate'] = this.createdDate;
-    data['lastModifiedBy'] = this.lastModifiedBy;
-    data['lastModifiedDate'] = this.lastModifiedDate;
-    data['authorities'] = this.authorities;
+    data['name'] = this.name;
+    if (this.student != null) {
+      data['student'] = this.student!.toJson();
+    }
+    return data;
+  }
+}
+
+class Student {
+  int? id;
+  String? age;
+  String? bio;
+  String? images;
+
+  Student({this.id, this.age, this.bio, this.images});
+
+  Student.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    age = json['age'];
+    bio = json['bio'];
+    images = json['images'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['age'] = this.age;
+    data['bio'] = this.bio;
+    data['images'] = this.images;
     return data;
   }
 }

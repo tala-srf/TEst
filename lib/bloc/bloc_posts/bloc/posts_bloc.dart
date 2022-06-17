@@ -14,7 +14,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     on<LoadEvent>((event, emit) async {
       emit(loadingPosts());
       try {
-        List<PostModel> posts = await postservice.getallpost(
+        PostModel posts = await postservice.getallpost(
           (await SharedPreferences.getInstance()).getString('backend_token') ??
               'EMPTY_TOKEN',
         );

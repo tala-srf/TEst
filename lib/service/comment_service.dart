@@ -1,4 +1,5 @@
-import 'package:ajyal/models/post_model.dart';
+import 'package:ajyal/models/comment_model.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:ajyal/service/config.dart';
 import 'dart:convert';
@@ -6,12 +7,12 @@ import 'dart:convert';
 
 
 class CommentService {
-  Future<Comments?> createcomment(Comments create, String token) async {
+  Future<CommentModel?> createcomment(CommentModel create, String token) async {
     if (token == 'EMPTY_TOKEN') {
       throw Exception();
     } else {
       http.Response response = await http.post(
-          Uri.parse('${ServiceConfig.base_url}/api/comments'),
+          Uri.parse('${ServiceConfig.base_url}/api/v1/comments'),
           body: jsonEncode(create),
           headers: {
             'Authorization': 'Bearer $token',
@@ -20,7 +21,7 @@ class CommentService {
    
         Map<String, dynamic> userData =
             jsonDecode(utf8.decode(response.bodyBytes));
-        Comments comment1 = Comments.fromJson(userData);
+        CommentModel comment1 = CommentModel.fromJson(userData);
        
         return comment1;
       

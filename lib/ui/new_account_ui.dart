@@ -11,8 +11,7 @@ class NewAcccont extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  TextEditingController logincontroler = TextEditingController();
-  TextEditingController lastnamecontroller = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
   TextEditingController firstnamecontroller = TextEditingController();
 
   @override
@@ -31,22 +30,22 @@ class NewAcccont extends StatelessWidget {
           )),
           child: BlocConsumer<AccountBloc, AccountState>(
             listener: (context, state) {
-              if (state is SuccessedAccontState) {
+              if (state is SuccessedAccontState ) {
                 Navigator.of(context).popAndPushNamed("/SignIn");
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('شكراً لك رجاءً انتظر التنشيط')));
+                    content: Text('شكراً لك بإمكانك تسجيل الدخول  ')));
               } else if (state is FaildAccount) {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('عذراً يوجد خطأ ')));
+                     Navigator.of(context).popAndPushNamed("/newaccount");
               }
             },
             builder: (context, state) {
               if (state is AccountInitial) {
                 return NEWForm(
                     emailController: emailController,
-                    logincontroler: logincontroler,
                     passwordController: passwordController,
-                    lastnamecontroller: lastnamecontroller,
+                    namecontroller: namecontroller,
                     firstnamecontroller: firstnamecontroller);
               } else if (state is LoadAccountState) {
                 return Center(
@@ -54,9 +53,8 @@ class NewAcccont extends StatelessWidget {
               } else if (state is FaildAccount) {
                 return NEWForm(
                     emailController: emailController,
-                    logincontroler: logincontroler,
                     passwordController: passwordController,
-                    lastnamecontroller: lastnamecontroller,
+                    namecontroller: namecontroller,
                     firstnamecontroller: firstnamecontroller);
               } else
                 // ignore: curly_braces_in_flow_control_structures
@@ -71,16 +69,15 @@ class NEWForm extends StatelessWidget {
   NEWForm({
     Key? key,
     required this.emailController,
-    required this.logincontroler,
     required this.passwordController,
-    required this.lastnamecontroller,
+    required this.namecontroller,
     required this.firstnamecontroller,
   }) : super(key: key);
 
   final TextEditingController emailController;
   final TextEditingController passwordController;
-  final TextEditingController logincontroler;
-  final TextEditingController lastnamecontroller;
+
+  final TextEditingController namecontroller;
   final TextEditingController firstnamecontroller;
   @override
   Widget build(BuildContext context) {
@@ -95,27 +92,29 @@ class NEWForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:const [
-                   Text(
+                children: const [
+                  Text(
                     "إنشاء حساب",
                     style: TextStyle(
                         color: Color(0xff665589),
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
                   ),
-                   Text(
+                  Text(
                     "أهلاً بك في منصة أجيال ",
                     style: TextStyle(
-                        color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold),
                   ),
-                   Text(
+                  Text(
                     "نحن سعيدون جداً باشتراكك معنا، من فضلك أدخل معلوماتك",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                     ),
                   ),
-                   Text(
+                  Text(
                     "الصحيحة لكي تحصل على تجرب استخدام صُممت خصيصاً لك",
                     style: TextStyle(
                       color: Colors.white,
@@ -128,173 +127,177 @@ class NEWForm extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 6 ,
+          flex: 6,
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 420,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 420,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      ),
+                      color: Color(0xff665589),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CircleAvatar(
+                            radius: 45,
+                            backgroundColor: const Color(0xff26da76),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.add_a_photo_outlined,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {},
+                            ),
                           ),
-                          color: Color(0xff665589),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CircleAvatar(
-                                radius: 45,
-                                backgroundColor: const Color(0xff26da76),
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.add_a_photo_outlined,
-                                    color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                              width: 280,
+                              height: 50,
+                              child: TextField(
+                                style: const TextStyle(color: Colors.black),
+                                decoration: const InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
                                   ),
-                                  onPressed: () {},
+                                  hintText: " اسم المستخدم",
                                 ),
+                                controller: namecontroller,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  width: 280,
-                                  height: 50,
-                                  child: TextField(
-                                    style: const TextStyle(color: Colors.black),
-                                    decoration: const InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(15)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white, width: 2.0),
-                                      ),
-                                      hintText: " اسم المستخدم",
-                                    ),
-                                    controller: logincontroler,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  width: 280,
-                                  height: 50,
-                                  child: TextField(
-                                    style: const TextStyle(color: Colors.black),
-                                    decoration: const InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(15)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white, width: 2.0),
-                                      ),
-                                      hintText: "البريد الإلكتروني",
-                                    ),
-                                    controller: emailController,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  width: 280,
-                                  height: 50,
-                                  child: TextField(
-                                    style: const TextStyle(color: Colors.black),
-                                    decoration: const InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(15)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white, width: 2.0),
-                                      ),
-                                      hintText: "العمر ",
-                                    ),
-                                    controller: firstnamecontroller,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                  width: 280,
-                                  height: 50,
-                                  child: TextField(
-                                    style: const TextStyle(color: Colors.black),
-                                    decoration: const InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(15)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white, width: 2.0),
-                                      ),
-                                      hintText: "كلمة المرور",
-                                    ),
-                                    controller: passwordController,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                              width: 280,
+                              height: 50,
+                              child: TextField(
+                                style: const TextStyle(color: Colors.black),
+                                decoration: const InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  hintText: "البريد الإلكتروني",
+                                ),
+                                controller: emailController,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                              width: 280,
+                              height: 50,
+                              child: TextField(
+                                style: const TextStyle(color: Colors.black),
+                                decoration: const InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  hintText: "الحالة",
+                                ),
+                                controller: firstnamecontroller,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                              width: 280,
+                              height: 50,
+                              child: TextField(
+                                style: const TextStyle(color: Colors.black),
+                                decoration: const InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  hintText: "كلمة المرور",
+                                ),
+                                controller: passwordController,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+                ),
               ],
             ),
           ),
-        ),Expanded(
+        ),
+        Expanded(
           flex: 2,
           child: SingleChildScrollView(
             child: Column(
               children: [
                 ElevatedButton(
-                      onPressed: () {
-                        final account = NewAccountModel(
-                            createdBy: 'admin',
-                            lastName: lastnamecontroller.text,
-                            firstName: firstnamecontroller.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            login: lastnamecontroller.text);
+                  onPressed: () {
+                    final account = NewAccountModel(
+                        age: "14",
+                        name: namecontroller.text,
+                        bio: firstnamecontroller.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        images:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhdEzcMvlpZHwQ6mTIx3bqqPGOJXX6cTvmwg&usqp=CAU");
 
-                        BlocProvider.of<AccountBloc>(context)
-                            .add(CreateAcountEvent(account));
-                      },
-                      child: const Text(
-                        ' إنشاء حساب',
-                        style: TextStyle(
-                            color: Color(0xff26da76), fontWeight: FontWeight.bold),
-                      ),
-                    ), const Text("مستخدم قديم؟",
-                style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w700)),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).popAndPushNamed("/SignIn");
-                },
-                child: const Text("بإمكانك تسجيل الدخول من هنا",
+                    BlocProvider.of<AccountBloc>(context)
+                        .add(CreateAcountEvent(account));
+            
+                  },
+                  child: const Text(
+                    ' إنشاء حساب',
                     style: TextStyle(
-                        color: Color(0xff26da76), fontWeight: FontWeight.w700)))
+                        color: Color(0xff26da76), fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const Text("مستخدم قديم؟",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).popAndPushNamed("/SignIn");
+                    },
+                    child: const Text("بإمكانك تسجيل الدخول من هنا",
+                        style: TextStyle(
+                            color: Color(0xff26da76),
+                            fontWeight: FontWeight.w700)))
               ],
             ),
           ),
         ),
-           
       ],
     );
   }

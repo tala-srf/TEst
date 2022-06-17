@@ -1,4 +1,11 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:ajyal/bloc/bloc_badge/bloc/badge_bloc.dart';
+import 'package:ajyal/bloc/bloc_delet_enrollment/bloc/deletenrollment_bloc.dart';
+import 'package:ajyal/bloc/bloc_delet_like/bloc/deletlike_bloc.dart';
+import 'package:ajyal/bloc/bloc_enrollment/bloc/enrollment_bloc.dart';
+import 'package:ajyal/bloc/bloc_lecture/bloc/finishedlecture_bloc.dart';
+import 'package:ajyal/bloc/bloc_like/bloc/like_bloc.dart';
+
 import 'package:ajyal/ui/pdf_view_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +18,9 @@ import 'package:ajyal/bloc/bloc_books/bloc/books_bloc.dart';
 import 'package:ajyal/bloc/bloc_comment/bloc/comment_bloc.dart';
 import 'package:ajyal/bloc/bloc_courses/bloc/coursesbloc_bloc.dart';
 import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
-import 'package:ajyal/bloc/bloc_new_comment/bloc/newcomment_bloc.dart';
+
 import 'package:ajyal/bloc/bloc_posts/bloc/posts_bloc.dart';
-import 'package:ajyal/bloc/bloc_updatapost/bloc/updatapost_bloc.dart';
+
 import 'package:ajyal/ui/new_account_ui.dart';
 import 'package:ajyal/ui/splash3_ui.dart';
 import 'package:ajyal/ui/category_courses_ui.dart';
@@ -71,18 +78,27 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => DatauserBloc(),
         ),
-        BlocProvider(
-          create: (_) => UpdatapostBloc(),
-        ),
-        BlocProvider(
-          create: (_) => NewcommentBloc(),
-        ),
+        // BlocProvider(
+        //   create: (_) => UpdatapostBloc(),
+        // ),
+        // BlocProvider(
+        //   create: (_) => NewcommentBloc(),
+        // ),
         BlocProvider(
           create: (_) => DeletcommentBloc(),
         ),
         BlocProvider(create: (_) => CoursesblocBloc()),
         BlocProvider(create: (_) => BooksBloc()),
-        BlocProvider(create: (_) => AlluserBloc())
+        BlocProvider(create: (_) => AlluserBloc()),
+        BlocProvider(create: (_) => LikeBloc()),
+        BlocProvider(create: (_) => EnrollmentBloc()),
+        BlocProvider(create: (_) => DeletenrollmentBloc()),
+        BlocProvider(create: (_) => DeletlikeBloc()),
+        BlocProvider(create: (_) => FinishedlectureBloc()),
+        BlocProvider(create: (_) => BadgeBloc())
+  
+
+
       ],
       child: MainApp(
         token: token,
@@ -174,14 +190,11 @@ class MainApp extends StatelessWidget {
       textTheme: const TextTheme(
           headline1: TextStyle(color: Color(0xffB183CE), fontFamily: 'Tahoma')),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        
         style: ButtonStyle(
-           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-     
-    )
-  ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          )),
           textStyle: MaterialStateProperty.all(const TextStyle(
               color: Color(0xff26da76), fontWeight: FontWeight.bold)),
           backgroundColor: MaterialStateProperty.all(const Color(0xffffffff)),

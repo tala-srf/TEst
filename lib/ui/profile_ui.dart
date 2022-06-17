@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:ajyal/bloc/bloc_badge/bloc/badge_bloc.dart';
 import 'package:ajyal/models/signin_model.dart';
 import 'package:ajyal/ui/magic_direction.dart';
 import 'package:ajyal/ui/magic_ui.dart';
@@ -14,12 +15,13 @@ import 'package:ajyal/bloc/bloc_all_user/bloc/alluser_bloc.dart';
 import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 
 class ProfileUi extends StatelessWidget {
- ProfileUi({Key? key}) : super(key: key);
+  ProfileUi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
     BlocProvider.of<AlluserBloc>(context).add(Loaddata1Event());
+    BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
     return MagicWidget(
       MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1
           ? MagicDirection.vertical
@@ -54,125 +56,141 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              flex: 3,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Section1(),
-              )),
-          Expanded(
-            flex: 7,
-            child: Container(
-              //  height: MediaQuery.of(context).size.height * 0.27,
-              decoration: const BoxDecoration(
-                  color: Color(0xff26da76),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(50),
-                      topRight: Radius.circular(50))),
-              child: ListView(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("علاماتي المميزة",
-                        style: TextStyle(
-                          color: Color(0xff665589),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        )),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            flex: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8.0),
-                                    child: Text("كؤوس الكورسات: ",
-                                        style: TextStyle(
-                                          color: Color(0xff665589),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15.0),
-                                    child: FlutterBadge(
-                                      icon: Image.asset(
-                                        "assets/image/collection.jpg",
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                      badgeColor: Colors.greenAccent,
-                                      badgeTextColor: Color(0xff665589),
-                                      position: BadgePosition.topRight(),
-                                      itemCount: 20,
-                                      borderRadius: 20,
+    return BlocBuilder<BadgeBloc, BadgeState>(
+      builder: (context, state) {
+        if (state is LoadingBadge) {
+          return Center();
+        } else if (state is FetchBadge) {
+          return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Section1(),
+                    )),
+                Expanded(
+                  flex: 7,
+                  child: Container(
+                    //  height: MediaQuery.of(context).size.height * 0.27,
+                    decoration: const BoxDecoration(
+                        color: Color(0xff26da76),
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(50),
+                            topRight: Radius.circular(50))),
+                    child: ListView(children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("أوسمتي :",
+                              style: TextStyle(
+                                color: Color(0xff665589),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              )),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  flex: 5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Text("أوسمة المهارات:",
+                                              style: TextStyle(
+                                                color: Color(0xff665589),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              )),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 15.0),
+                                          child: FlutterBadge(
+                                            icon: Image.asset(
+                                              "assets/image/collection.jpg",
+                                              height: 50,
+                                              width: 50,
+                                            ),
+                                            badgeColor: Colors.greenAccent,
+                                            badgeTextColor: Color(0xff665589),
+                                            position: BadgePosition.topRight(),
+                                            itemCount: state
+                                                .badge.coursesCount!.length,
+                                            borderRadius: 20,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )),
-                        Expanded(
-                            flex: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8.0),
-                                    child: Text("كؤوس الكتب: ",
-                                        style: TextStyle(
-                                          color: Color(0xff665589),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15.0),
-                                    child: FlutterBadge(
-                                      icon: Image.asset(
-                                        "assets/image/diary.png",
-                                        height: 70,
-                                        width: 70,
-                                      ),
-                                      badgeColor: Colors.greenAccent,
-                                      badgeTextColor: Color(0xff665589),
-                                      position: BadgePosition.topRight(),
-                                      itemCount: 20,
-                                      borderRadius: 20,
+                                  )),
+                              Expanded(
+                                  flex: 5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Text("أوسمة الكتب:",
+                                              style: TextStyle(
+                                                color: Color(0xff665589),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              )),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 15.0),
+                                          child: FlutterBadge(
+                                            icon: Image.asset(
+                                              "assets/image/diary.png",
+                                              height: 70,
+                                              width: 70,
+                                            ),
+                                            badgeColor: Colors.greenAccent,
+                                            badgeTextColor: Color(0xff665589),
+                                            position: BadgePosition.topRight(),
+                                            itemCount:
+                                                state.badge.booksCount!.length,
+                                            borderRadius: 20,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ))
-                      ],
-                    ),
-                  ],
-                ),
-              ]),
-            ),
-          )
-        ]);
+                                  ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
+                )
+              ]);
+        } else {
+          return Image.asset("assets/image/no-results-found.png");
+        }
+      },
+    );
   }
 }
 
@@ -185,7 +203,7 @@ class Section1 extends StatelessWidget {
       builder: (context, state) {
         if (state is Loading1State) {
           return Center(child: Lottie.asset("assets/lottie/loading.json"));
-        } else if (state is Successed123State) {
+        } else if (state is Successed12356State) {
           return ListView.builder(
               itemCount: 1,
               itemBuilder: (context, index) {
@@ -212,7 +230,7 @@ class Section1 extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 5.0, left: 5),
                           child: Text(
-                            "مرحباً ${state.data.login}",
+                            "مرحباً ${state.data.data?.name}",
                             style: const TextStyle(
                                 color: Color(0xff26da76),
                                 fontWeight: FontWeight.bold,
@@ -244,60 +262,69 @@ class Center1 extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(50), topLeft: Radius.circular(50))),
-      child: ListView(children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Text("معلوماتي الشخصية",
-                style: TextStyle(
-                  color: Color(0xff26da76),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                )),
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: Text("الاسم : ",
+      child: BlocBuilder<DatauserBloc, DatauserState>(
+        builder: (context, state) {
+          if (state is Loading1State) {
+            return Center(child: Lottie.asset("assets/lottie/loading.json"));
+          } else if (state is Successed12356State) {
+            return ListView(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text("معلوماتي الشخصية",
                       style: TextStyle(
-                        color: Color(0xff665589),
+                        color: Color(0xff26da76),
                         fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontSize: 22,
                       )),
-                ),
-                Text("دينا غازي ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    )),
-              ],
-            ),
-            
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: Text("الحالة : ",
-                      style: TextStyle(
-                        color: Color(0xff665589),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      )),
-                ),
-                Text(" أشرق وكأن الكون كله لك ...  ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    )),
-              ],
-            ),
-          ],
-        ),
-      ]),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 15.0),
+                        child: Text("الاسم : ",
+                            style: TextStyle(
+                              color: Color(0xff665589),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            )),
+                      ),
+                      Text("${state.data.data?.name} ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          )),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 15.0),
+                        child: Text("الحالة : ",
+                            style: TextStyle(
+                              color: Color(0xff665589),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            )),
+                      ),
+                      Text("${state.data.data?.student?.bio} ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          )),
+                    ],
+                  ),
+                ],
+              ),
+            ]);
+          } else {
+            return Image.asset("assets/image/no-results-found.png");
+          }
+        },
+      ),
     );
   }
 }
@@ -319,7 +346,7 @@ class End extends StatelessWidget {
                 Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0,right: 4),
+                      padding: const EdgeInsets.only(left: 8.0, right: 4),
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xff26da76),
@@ -335,7 +362,9 @@ class End extends StatelessWidget {
                                   color: Color(0xff665589),
                                   fontWeight: FontWeight.bold,
                                   fontSize: MediaQuery.of(context).size.height /
-                                              MediaQuery.of(context).size.width >
+                                              MediaQuery.of(context)
+                                                  .size
+                                                  .width >
                                           1
                                       ? 20
                                       : 10,
@@ -354,7 +383,7 @@ class End extends StatelessWidget {
                 Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0,left: 4),
+                      padding: const EdgeInsets.only(right: 8.0, left: 4),
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xff26da76),
@@ -364,13 +393,15 @@ class End extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 8.0),
                           child: Center(
-                            child: Text(" أوائل الكورسات",
+                            child: Text(" أوائل المهارات",
                                 textDirection: TextDirection.rtl,
                                 style: TextStyle(
                                   color: Color(0xff665589),
                                   fontWeight: FontWeight.bold,
                                   fontSize: MediaQuery.of(context).size.height /
-                                              MediaQuery.of(context).size.width >
+                                              MediaQuery.of(context)
+                                                  .size
+                                                  .width >
                                           1
                                       ? 20
                                       : 10,
@@ -379,7 +410,7 @@ class End extends StatelessWidget {
                         ),
                       ),
                     )),
-                Expanded(flex: 18, child: Section2()),
+                Expanded(flex: 18, child: Section3()),
               ],
             )),
       ],
@@ -397,16 +428,16 @@ class Section2 extends StatelessWidget {
     return BlocBuilder<AlluserBloc, AlluserState>(
       builder: (context, state) {
         if (state is LoadingState) {
-          return Center(child: Lottie.asset("assets/lottie/loading.json"));
+          return Center();
         } else if (state is SuccessedState) {
-          List<DataUserModel>? _id = state.data1;
+          // List<DataUserModel>? _id = state.data1;
 
-          _id?.sort((a, b) => (b.id!).compareTo(a.id!));
+          //_id?.sort((a, b) => (b.data!.id!).compareTo(a.data!.id!));
 
           return ListView.builder(
               // itemCount: state.data1?.length == null ? 0 : ((state.data1?.length)! > 3 ? 3 : state.data1?.length),
 
-              itemCount: 3,
+              itemCount: state.data1?.length,
               itemBuilder: (context, i) {
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -432,7 +463,7 @@ class Section2 extends StatelessWidget {
                                                 fontSize: 17,
                                               )),
                                         ),
-                                        Text("${_id?[i].login}",
+                                        Text("${state.data1![i].user?.name}",
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -441,7 +472,7 @@ class Section2 extends StatelessWidget {
                                       ],
                                     ),
                                     Row(
-                                      children: const [
+                                      children: [
                                         Padding(
                                           padding: EdgeInsets.only(right: 15.0),
                                           child: Text("الحالة : ",
@@ -451,7 +482,7 @@ class Section2 extends StatelessWidget {
                                                 fontSize: 17,
                                               )),
                                         ),
-                                        Text("أشرق وكأن الكون كله لك ..",
+                                        Text("${state.data1![i].bio}",
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -459,39 +490,40 @@ class Section2 extends StatelessWidget {
                                             )),
                                       ],
                                     ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Expanded(
-                                            flex: 5,
-                                            child: Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 8.0),
-                                              child: Text("كؤوس الكورسات: ",
-                                                  style: TextStyle(
-                                                    color: Color(0xff665589),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 17,
-                                                  )),
-                                            )),
-                                        FlutterBadge(
-                                          icon: Image.asset(
-                                            "assets/image/collection.jpg",
-                                            height: 30,
-                                            width: 30,
-                                          ),
-                                          badgeColor: Colors.white70,
-                                          badgeTextColor: Color(0xff665589),
-                                          position: BadgePosition.topRight(),
-                                          itemCount: _id?[i].id  ?? 0,
-                                          borderRadius: 20,
-                                        ),
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.center,
+                                    //   mainAxisSize: MainAxisSize.max,
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceAround,
+                                    //   children: [
+                                    //     Expanded(
+                                    //         flex: 5,
+                                    //         child: Padding(
+                                    //           padding:
+                                    //               EdgeInsets.only(right: 8.0),
+                                    //           child: Text("أوسمة المهارات: ",
+                                    //               style: TextStyle(
+                                    //                 color: Color(0xff665589),
+                                    //                 fontWeight: FontWeight.bold,
+                                    //                 fontSize: 17,
+                                    //               )),
+                                    //         )),
+                                    //     FlutterBadge(
+                                    //       icon: Image.asset(
+                                    //         "assets/image/collection.jpg",
+                                    //         height: 30,
+                                    //         width: 30,
+                                    //       ),
+                                    //       badgeColor: Colors.white70,
+                                    //       badgeTextColor: Color(0xff665589),
+                                    //       position: BadgePosition.topRight(),
+                                    //       itemCount:
+                                    //           state.data1![i].badgesCount!,
+                                    //       borderRadius: 20,
+                                    //     ),
+                                    //   ],
+                                    // ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -504,7 +536,7 @@ class Section2 extends StatelessWidget {
                                             child: Padding(
                                               padding:
                                                   EdgeInsets.only(right: 8.0),
-                                              child: Text("كؤوس الكتب: ",
+                                              child: Text("أوسمة الكتب: ",
                                                   style: TextStyle(
                                                     color: Color(0xff665589),
                                                     fontWeight: FontWeight.bold,
@@ -520,7 +552,8 @@ class Section2 extends StatelessWidget {
                                           badgeColor: Colors.white70,
                                           badgeTextColor: Color(0xff665589),
                                           position: BadgePosition.topRight(),
-                                          itemCount:  _id?[i].id  ?? 0,
+                                          itemCount:
+                                              state.data1![i].badgesCount!,
                                           borderRadius: 20,
                                         ),
                                       ],
@@ -558,7 +591,198 @@ class Section2 extends StatelessWidget {
                               color: Color(0xfff5ba33), //f9e949
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Text("${_id?[i].login}",
+                                child: Text("${state.data1![i].user?.name}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                );
+              });
+        } else {
+          return Image.asset("assets/image/no-results-found.png");
+        }
+      },
+    );
+  }
+}
+class Section3 extends StatelessWidget {
+  Section3({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AlluserBloc, AlluserState>(
+      builder: (context, state) {
+        if (state is LoadingState) {
+          return Center();
+        } else if (state is SuccessedState) {
+          // List<DataUserModel>? _id = state.data1;
+
+          //_id?.sort((a, b) => (b.data!.id!).compareTo(a.data!.id!));
+
+          return ListView.builder(
+              // itemCount: state.data1?.length == null ? 0 : ((state.data1?.length)! > 3 ? 3 : state.data1?.length),
+
+              itemCount: state.data2?.length,
+              itemBuilder: (context, i) {
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            // barrierColor: Color(0xffc4e5ff),
+                            builder: (ctxt) {
+                              return AlertDialog(
+                                title: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.only(right: 15.0),
+                                          child: Text("الاسم : ",
+                                              style: TextStyle(
+                                                color: Color(0xff665589),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              )),
+                                        ),
+                                        Text("${state.data2![i].user?.name}",
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17,
+                                            )),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 15.0),
+                                          child: Text("الحالة : ",
+                                              style: TextStyle(
+                                                color: Color(0xff665589),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              )),
+                                        ),
+                                        Text("${state.data2![i].bio}",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17,
+                                            )),
+                                      ],
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      // mainAxisAlignment:
+                                      //     MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Expanded(
+                                            flex: 5,
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 8.0),
+                                              child: Text("أوسمة المهارات: ",
+                                                  style: TextStyle(
+                                                    color: Color(0xff665589),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17,
+                                                  )),
+                                            )),
+                                        FlutterBadge(
+                                          icon: Image.asset(
+                                            "assets/image/collection.jpg",
+                                            height: 30,
+                                            width: 30,
+                                          ),
+                                          badgeColor: Colors.white70,
+                                          badgeTextColor: Color(0xff665589),
+                                          position: BadgePosition.topRight(),
+                                          itemCount:
+                                              state.data2![i].badgesCount!,
+                                          borderRadius: 20,
+                                        ),
+                                      ],
+                                    ),
+                                    // Row(
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.start,
+                                    //   mainAxisSize: MainAxisSize.max,
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.start,
+                                    //   children: [
+                                    //     const Expanded(
+                                    //         flex: 5,
+                                    //         child: Padding(
+                                    //           padding:
+                                    //               EdgeInsets.only(right: 8.0),
+                                    //           child: Text("أوسمة الكتب: ",
+                                    //               style: TextStyle(
+                                    //                 color: Color(0xff665589),
+                                    //                 fontWeight: FontWeight.bold,
+                                    //                 fontSize: 17,
+                                    //               )),
+                                    //         )),
+                                    //     FlutterBadge(
+                                    //       icon: Image.asset(
+                                    //         "assets/image/diary.png",
+                                    //         height: 50,
+                                    //         width: 50,
+                                    //       ),
+                                    //       badgeColor: Colors.white70,
+                                    //       badgeTextColor: Color(0xff665589),
+                                    //       position: BadgePosition.topRight(),
+                                    //       itemCount:
+                                    //           state.data1![i].badgesCount!,
+                                    //       borderRadius: 20,
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width * 0.04,
+                              color: Color(0xfff5ba33), //f9e949
+                            ),
+                            Container(
+                              height: 80,
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff75c4b5), //75c4b5
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/image/Avatar-20.png"),
+                                  )),
+                            ),
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              color: Color(0xfff5ba33), //f9e949
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text("${state.data2![i].user?.name}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)),

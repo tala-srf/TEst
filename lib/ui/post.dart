@@ -1,7 +1,11 @@
+import 'package:ajyal/bloc/bloc_delet_like/bloc/deletlike_bloc.dart';
+import 'package:ajyal/bloc/bloc_like/bloc/like_bloc.dart';
+import 'package:ajyal/models/comment_model.dart';
+import 'package:ajyal/models/like_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_badged/badge_position.dart';
-import 'package:flutter_badged/flutter_badge.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:like_button/like_button.dart';
 import 'package:lottie/lottie.dart';
 
@@ -9,9 +13,8 @@ import 'package:ajyal/bloc/bloc_comment/bloc/comment_bloc.dart';
 import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 
 import 'package:ajyal/bloc/bloc_delet_comment/bloc/deletcomment_bloc.dart';
-import 'package:ajyal/bloc/bloc_new_comment/bloc/newcomment_bloc.dart';
+
 import 'package:ajyal/bloc/bloc_posts/bloc/posts_bloc.dart';
-import 'package:ajyal/bloc/bloc_updatapost/bloc/updatapost_bloc.dart';
 
 import 'package:ajyal/models/post_model.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -49,8 +52,10 @@ class ListPosts extends StatefulWidget {
 }
 
 class _ListPostsState extends State<ListPosts> {
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  // ignore: prefer_final_fields
+  RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
   @override
   Widget build(BuildContext conte) {
     return
@@ -76,8 +81,9 @@ class _ListPostsState extends State<ListPosts> {
                 _refreshController.refreshCompleted();
               },
               child: ListView.builder(
-                  itemCount: state.posts.length,
+                  itemCount: state.posts.data!.length,
                   itemBuilder: (cont, index) {
+                    String createat = "${state.posts.data![index].createdAt}";
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Card(
@@ -101,13 +107,13 @@ class _ListPostsState extends State<ListPosts> {
                                 backgroundColor: Color(0xff26da76),
                               ),
                               title: Text(
-                                  ' الأستاذ ${state.posts[index].owner?.login}',
+                                  ' الأستاذ ${state.posts.data![index].teacherId}',
                                   style: const TextStyle(
                                     color: Color(0xff26da76),
                                     fontWeight: FontWeight.bold,
                                   )),
                               subtitle: Text(
-                                '${state.posts[index].createdAt}',
+                                createat.substring(0, 10),
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.6)),
                               ),
@@ -115,23 +121,23 @@ class _ListPostsState extends State<ListPosts> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                '${state.posts[index].content}',
+                                '${state.posts.data![index].content}',
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.6)),
                               ),
                             ),
-                            state.posts[index].title != null
+                            state.posts.data![index].images != null
                                 ? Image.network(
-                                    "${state.posts[index].title}",
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzrtaXGkXhkLIV4Du-Lg0JPJ5I84RQb8RvIA&usqp=CAU",
                                     width: double.infinity,
                                     height: 300,
                                   )
-                                :Text(""),
+                                : Text(""),
                             ContainerWidget(
                               createcommentController:
                                   widget.createcommentController,
                               index: index,
-                              p: state.posts[index],
+                              p: state.posts.data![index],
                               contex: con,
                             )
                           ],
@@ -160,7 +166,7 @@ class ContainerWidget extends StatelessWidget {
 
   final TextEditingController createcommentController;
   final int index;
-  final PostModel p;
+  final Data p;
   BuildContext contex;
   @override
   Widget build(
@@ -199,7 +205,7 @@ class CommentButton1 extends StatelessWidget {
   }) : super(key: key);
 
   final int index;
-  final PostModel p;
+  final Data p;
   final BuildContext con;
   final TextEditingController createcommentController;
 
@@ -210,91 +216,74 @@ class CommentButton1 extends StatelessWidget {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         Scaffold.of(con).showBottomSheet((context) {
-          return BlocBuilder<UpdatapostBloc, UpdatapostState>(
-            builder: (context, state) {
-              return BlocBuilder<PostsBloc, PostsState>(
-                  builder: (context, state) {
-                if (state is loadingPosts ||
-                    state is PostsInitial ||
-                    state is UpDataState) {
-                  return Center(
-                      child: Lottie.asset("assets/lottie/loading.json"));
-                }
-                if (state is FetchPosts) {
-                  sharedPreferences.setInt(
-                      'id_post', state.posts[index].id ?? 0);
+          return BlocBuilder<PostsBloc, PostsState>(builder: (context, state) {
+            if (state is loadingPosts || state is PostsInitial) {
+              return Center(child: Lottie.asset("assets/lottie/loading.json"));
+            }
+            if (state is FetchPosts) {
+              sharedPreferences.setInt(
+                  'id_post', state.posts.data![index].id ?? 0);
 
-                  return Scaffold(
-                     backgroundColor: Colors.black12,
-                    //resizeToAvoidBottomInset: false, //لحل مشكلة الكيبورد
-                    appBar: AppBar(
-                      backgroundColor: const Color(0xff26da76),
-                    ),
-                    body: Column(
-                      children: [
-                        Builder(builder: (context) {
-                          return BlocBuilder<DatauserBloc, DatauserState>(
-                              builder: (context, stat) {
-                            if (stat is Successed123State) {
-                              return BlocListener<NewcommentBloc,
-                                  NewcommentState>(
-                                listener: (context, state) {
-                                  if (state is GetComment) {
-                                    Comments new1 = state.new1;
-                                    p.comments?.add(new1);
-                                    BlocProvider.of<UpdatapostBloc>(context)
-                                        .add(UpdataEvent(p));
-                                  }
-                                },
-                                child: Expanded(
-                                  flex: 17,
-                                  child: ListView.builder(
-                                    itemCount:
-                                        state.posts[index].comments?.length,
-                                    itemBuilder: (ctxt, inde) => Padding(
-                                      padding: const EdgeInsets.all(2),
-                                      child: ListTile(
-                                        contentPadding: EdgeInsets.all(2),
-                                        tileColor: Colors.white30,
-                                        leading: ClipOval(
-                                          child: Material(
-                                              // Button color
-                                              child: InkWell(
-                                            splashColor:
-                                                Colors.white24, // Splash color
-                                            onTap: () {
-                                              showDialog(
-                                                  context: context,
-                                                  // barrierColor: Color(0xffc4e5ff),
-                                                  builder: (ctxt) {
-                                                    return DataUserComment();
-                                                  });
-                                            },
-                                            child:CircleAvatar(
-                                              radius: 25,
-                                              backgroundImage: AssetImage(
-                                                  "assets/image/Avatar-20.png"),
-                                              backgroundColor:
-                                                  Color(0xff665589),
-                                            ),
-                                          )),
-                                        ),
-                                        hoverColor: Colors.black38,
-                                        title: Text(
-                                          '${state.posts[index].comments?[inde].user?.login}',
-                                          style: const TextStyle(
-                                              fontSize: 24,
-                                              color: Color(0xff665589)),
-                                        ),
-                                        subtitle: Text(
-                                          '${state.posts[index].comments?[inde].title}',
-                                          style: TextStyle(
-                                              color:
-                                                  Colors.black.withAlpha(155)),
-                                        ),
-                                        trailing:(stat.data.id ==
-                                                state.posts[index]
-                                                    .comments?[inde].user?.id)? IconButton(
+              return Scaffold(
+                backgroundColor: Colors.black12,
+                //resizeToAvoidBottomInset: false, //لحل مشكلة الكيبورد
+                appBar: AppBar(
+                  backgroundColor: const Color(0xff26da76),
+                ),
+                body: Column(
+                  children: [
+                    Builder(builder: (context) {
+                      return BlocBuilder<DatauserBloc, DatauserState>(
+                          builder: (context, stat) {
+                        if (stat is Successed12356State) {
+                           
+                          return Expanded(
+                            flex: 17,
+                            child: ListView.builder(
+                              itemCount:
+                                  state.posts.data![index].comments?.length,
+                              itemBuilder: (ctxt, inde) => Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.all(2),
+                                  tileColor: Colors.white30,
+                                  leading: ClipOval(
+                                    child: Material(
+                                        // Button color
+                                        child: InkWell(
+                                      splashColor:
+                                          Colors.white24, // Splash color
+                                      onTap: () {
+                                        // showDialog(
+                                        //     context: context,
+                                        //     // barrierColor: Color(0xffc4e5ff),
+                                        //     builder: (ctxt) {
+                                        //       return DataUserComment();
+                                        //     });
+                                      },
+                                      child: const CircleAvatar(
+                                        radius: 25,
+                                        backgroundImage: AssetImage(
+                                            "assets/image/Avatar-20.png"),
+                                        backgroundColor: Color(0xff665589),
+                                      ),
+                                    )),
+                                  ),
+                                  hoverColor: Colors.black38,
+                                  title: Text(
+                                    '${state.posts.data![index].comments?[inde].studentId}',
+                                    style: const TextStyle(
+                                        fontSize: 24, color: Color(0xff665589)),
+                                  ),
+                                  subtitle: Text(
+                                    '${state.posts.data![index].comments?[inde].content}',
+                                    style: TextStyle(
+                                        color: Colors.black.withAlpha(155)),
+                                  ),
+                                  trailing: (stat.data.data?.name ==
+                                          state.posts.data![index]
+                                              .comments?[inde].studentId)
+                                      ? IconButton(
                                           icon:
                                               const Icon(Icons.delete_forever),
                                           tooltip: 'Navigation menu',
@@ -306,68 +295,65 @@ class CommentButton1 extends StatelessWidget {
                                                     .getInstance();
                                             sharedPreferences.setInt(
                                                 'id_delet_comment',
-                                                state.posts[index]
+                                                state.posts.data![index]
                                                         .comments?[inde].id ??
                                                     0);
 
-                                           
-                                              showDialog(
-                                                  context: context,
-                                                  // barrierColor: Color(0xffc4e5ff),
-                                                  builder: (ctxt) {
-                                                    return ButtenDeletComment(
-                                                      delet: state.posts[index]
-                                                          .comments?[inde],
-                                                      post: state.posts[index],
-                                                    );
-                                                  });
-                                           
+                                            showDialog(
+                                                context: context,
+                                                // barrierColor: Color(0xffc4e5ff),
+                                                builder: (ctxt) {
+                                                  return ButtenDeletComment(
+                                                    delet: state
+                                                        .posts
+                                                        .data![index]
+                                                        .comments?[inde],
+                                                    post: state
+                                                        .posts.data![index],
+                                                  );
+                                                });
                                           },
                                           // null disables the button
-                                        ): null,
-                                      ),
-                                    ),
-                                  ),
+                                        )
+                                      : null,
                                 ),
-                              );
-                            } else {
-                              return const Text("data");
-                            }
-                          });
-                        }),
-                        BlocConsumer<CommentBloc, CommentState>(
-                          listener: (context, state) {
-                            if (state is Error1State) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text('عذراً هناك خطأ في البيانات')));
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is CommentInitial) {
-                              //  final   user = User( login: "${state.user?.login}") ;
-                              return CreateComment(
-                                createcommentController:
-                                    createcommentController,
-                                p: p,
-                              );
-                            } else if (state is loadingComments) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              return const Center(child: Text(''));
-                            }
-                          },
-                        ),
-                      ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Text("data");
+                        }
+                      });
+                    }),
+                    BlocConsumer<CommentBloc, CommentState>(
+                      listener: (context, state) {
+                        if (state is Error1State) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('عذراً هناك خطأ في البيانات')));
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is CommentInitial) {
+                          //  final   user = User( login: "${state.user?.login}") ;
+                          return CreateComment(
+                            createcommentController: createcommentController,
+                            p: p,
+                          );
+                        } else if (state is loadingComments) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          return const Center(child: Text(''));
+                        }
+                      },
                     ),
-                  );
-                } else {
-                  return const Center(child: Text('NOCOMMENT'));
-                }
-              });
-            },
-          );
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: Text('NOCOMMENT'));
+            }
+          });
         });
       },
       child: const Text('تعليق ',
@@ -383,11 +369,11 @@ class ButtenDeletComment extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final Comments? delet;
-  final PostModel post;
+  final Data post;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('هل أنت متأكد من حذف التعليق'),
+      title: const Text('هل أنت متأكد من حذف التعليق'),
       actions: [
         TextButton(
           onPressed: () {
@@ -400,9 +386,9 @@ class ButtenDeletComment extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            post.comments?.remove(delet);
-            BlocProvider.of<UpdatapostBloc>(context).add(UpdataEvent(post));
+            // BlocProvider.of<UpdatapostBloc>(context).add(UpdataEvent(post));
             BlocProvider.of<DeletcommentBloc>(context).add(DeletCommEvent());
+            post.comments?.remove(delet);
             Navigator.of(context).pop();
           },
           child: const Text(
@@ -423,20 +409,22 @@ class LikeButten extends StatelessWidget {
     required this.con,
   }) : super(key: key);
   final int index;
-  final PostModel p;
+  final Data p;
   final BuildContext con;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(builder: (context, stat) {
-      if (stat is Successed123State) {
+      if (stat is Successed12356State) {
         return BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
-            Reactions r2 = Reactions(id: stat.data.id, login: stat.data.login);
-            List<Reactions>? copy = [];
-            List<Reactions>? newgfgList = List.from(p.reactions!)..addAll(copy);
+            int? r2 = stat.data.data?.student?.id;
+            //List<Likes>? copy = [];
+//List<Likes>? newgfgList = List.from(p.likes!)..addAll(copy);
+
+            List<Likes>? newgfgList = p.likes;
             int? index1 =
-                newgfgList.indexWhere((element) => element.id == r2.id);
+                newgfgList?.indexWhere((element) => element.studentId == r2);
 
             if (state is FetchPosts) {
               return LikeButton(
@@ -453,13 +441,11 @@ class LikeButten extends StatelessWidget {
                     size: 32,
                   );
                 },
-                likeCount: state.posts[index].reactions?.length,
+                likeCount: state.posts.data![index].likes?.length,
                 isLiked: (index1 != -1),
                 onTap: (isLiked) {
                   return onLikeButtonTapped(
-                      isLiked,
-                      Reactions(id: stat.data.id, login: stat.data.login),
-                      context);
+                      isLiked, Likes(studentId: stat.data.data?.id), context);
                 },
               );
             } else {
@@ -473,22 +459,38 @@ class LikeButten extends StatelessWidget {
     });
   }
 
-  Future<bool?> onLikeButtonTapped(isLiked, Reactions r, context) async {
+  Future<bool?> onLikeButtonTapped(isLiked, Likes r, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt('id_post', p.id ?? 0);
-    int? index1 = p.reactions?.indexWhere((element) => element.id == r.id);
+    int? idstudent = sharedPreferences.getInt('id_student') ?? 0;
 
+    //sharedPreferences.setInt('id_delet_like', p.id ?? 0);
+    for (int index = 0; index < p.likes!.length; index++) {
+      int? index1 =
+          p.likes?.indexWhere((element) => element.studentId == idstudent);
+      if (index1 != -1) {
+        sharedPreferences.setInt("id_delet_like", p.likes![index].id ?? 0);
+      }
+    }
+
+    int? index1 =
+        p.likes?.indexWhere((element) => element.studentId == idstudent);
+
+    int? idPos = sharedPreferences.getInt('id_post');
+    LikeModel? create = LikeModel(postId: "$idPos");
     if (index1 == -1) {
-      p.reactions?.add(r);
-      BlocProvider.of<UpdatapostBloc>(context).add(UpdataEvent(p));
+      p.likes?.add(r);
+      BlocProvider.of<LikeBloc>(context).add(CreateLikeEvent(create: create));
+      //BlocProvider.of<UpdatapostBloc>(context).add(UpdataEvent(p));
     }
     if (index1 != -1) {
-      p.reactions?.removeWhere((
+      //sharedPreferences.setInt('id_delet_like', p.likes[].id ?? 0);
+      BlocProvider.of<DeletlikeBloc>(context).add(Deletlike1Event());
+      // p.likes?.remove(r);
+      p.likes?.removeWhere((
         element,
       ) =>
-          element.id == r.id);
-
-      BlocProvider.of<UpdatapostBloc>(context).add(UpdataEvent(p));
+          element.id == idstudent);
     }
 
     return Future.value(!isLiked);
@@ -503,7 +505,7 @@ class CreateComment extends StatelessWidget {
   }) : super(key: key);
 
   final TextEditingController createcommentController;
-  final PostModel p;
+  final Data p;
 
   @override
   Widget build(BuildContext context) {
@@ -533,26 +535,27 @@ class CreateComment extends StatelessWidget {
           ),
           BlocBuilder<DatauserBloc, DatauserState>(
             builder: (context, state) {
-              if (state is Successed123State) {
+              if (state is Successed12356State) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       onLongPress: () =>
                           MediaQuery.of(context).size.width * 0.25,
                       onPressed: () async {
+                        SharedPreferences sharedPreferences =
+                            await SharedPreferences.getInstance();
+                        int? idPost = sharedPreferences.getInt("id_post");
+                        Comments? c = Comments(
+                            content: createcommentController.text,
+                            studentId: "${state.data.data?.name}");
+                        p.comments?.add(c);
                         BlocProvider.of<CommentBloc>(context).add(
                             CreateCommentEvent(
-                                create: Comments(
-                                    title: createcommentController.text,
-                                    user: User(
-                                        id: state.data.id,
-                                        login: state.data.login),
-                                    createdAt:
-                                        "${DateTime.now().year}-0${DateTime.now().month}-${DateTime.now().day}")));
+                                create: CommentModel(
+                                    content: createcommentController.text,
+                                    postId: "$idPost")));
 
                         createcommentController.clear();
-                        BlocProvider.of<NewcommentBloc>(context)
-                            .add(NewCommentEvent());
                       },
                       child: const Icon(
                         Icons.send,
@@ -570,114 +573,114 @@ class CreateComment extends StatelessWidget {
   }
 }
 
-class DataUserComment extends StatelessWidget {
-  const DataUserComment({Key? key}) : super(key: key);
+// class DataUserComment extends StatelessWidget {
+//   const DataUserComment({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Column(
-        children: [
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text("الاسم : ",
-                    style: TextStyle(
-                      color: Color(0xff665589),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    )),
-              ),
-              Text("user",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  )),
-            ],
-          ),
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text("الحالة : ",
-                    style: TextStyle(
-                      color: Color(0xff665589),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    )),
-              ),
-              Text("أشرق وكأن الكون كله لك ..",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  )),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Text("كؤوس الكورسات: ",
-                        style: TextStyle(
-                          color: Color(0xff665589),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        )),
-                  )),
-              FlutterBadge(
-                icon: Image.asset(
-                  "assets/image/collection.jpg",
-                  height: 30,
-                  width: 30,
-                ),
-                badgeColor: Colors.white70,
-                badgeTextColor: Color(0xff665589),
-                position: BadgePosition.topRight(),
-                itemCount: 10,
-                borderRadius: 20,
-              ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Text("كؤوس الكتب: ",
-                        style: TextStyle(
-                          color: Color(0xff665589),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        )),
-                  )),
-              FlutterBadge(
-                icon: Image.asset(
-                  "assets/image/diary.png",
-                  height: 50,
-                  width: 50,
-                ),
-                badgeColor: Colors.white70,
-                badgeTextColor: Color(0xff665589),
-                position: BadgePosition.topRight(),
-                itemCount: 20,
-                borderRadius: 20,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       title: Column(
+//         children: [
+//           Row(
+//             children: const [
+//               Padding(
+//                 padding: EdgeInsets.only(right: 15.0),
+//                 child: Text("الاسم : ",
+//                     style: TextStyle(
+//                       color: Color(0xff665589),
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 17,
+//                     )),
+//               ),
+//               Text("user",
+//                   style: TextStyle(
+//                     color: Colors.black,
+//                     fontWeight: FontWeight.bold,
+//                     fontSize: 17,
+//                   )),
+//             ],
+//           ),
+//           Row(
+//             children: const [
+//               Padding(
+//                 padding: EdgeInsets.only(right: 15.0),
+//                 child: Text("الحالة : ",
+//                     style: TextStyle(
+//                       color: Color(0xff665589),
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 17,
+//                     )),
+//               ),
+//               Text("أشرق وكأن الكون كله لك ..",
+//                   style: TextStyle(
+//                     color: Colors.black,
+//                     fontWeight: FontWeight.bold,
+//                     fontSize: 17,
+//                   )),
+//             ],
+//           ),
+//           Row(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             mainAxisSize: MainAxisSize.max,
+//             mainAxisAlignment: MainAxisAlignment.spaceAround,
+//             children: [
+//               const Expanded(
+//                   flex: 5,
+//                   child: Padding(
+//                     padding: EdgeInsets.only(right: 8.0),
+//                     child: Text("كؤوس الكورسات: ",
+//                         style: TextStyle(
+//                           color: Color(0xff665589),
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 17,
+//                         )),
+//                   )),
+//               FlutterBadge(
+//                 icon: Image.asset(
+//                   "assets/image/collection.jpg",
+//                   height: 30,
+//                   width: 30,
+//                 ),
+//                 badgeColor: Colors.white70,
+//                 badgeTextColor: Color(0xff665589),
+//                 position: BadgePosition.topRight(),
+//                 itemCount: 10,
+//                 borderRadius: 20,
+//               ),
+//             ],
+//           ),
+//           Row(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisSize: MainAxisSize.max,
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             children: [
+//               const Expanded(
+//                   flex: 5,
+//                   child: Padding(
+//                     padding: EdgeInsets.only(right: 8.0),
+//                     child: Text("كؤوس الكتب: ",
+//                         style: TextStyle(
+//                           color: Color(0xff665589),
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 17,
+//                         )),
+//                   )),
+//               FlutterBadge(
+//                 icon: Image.asset(
+//                   "assets/image/diary.png",
+//                   height: 50,
+//                   width: 50,
+//                 ),
+//                 badgeColor: Colors.white70,
+//                 badgeTextColor: Color(0xff665589),
+//                 position: BadgePosition.topRight(),
+//                 itemCount: 20,
+//                 borderRadius: 20,
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

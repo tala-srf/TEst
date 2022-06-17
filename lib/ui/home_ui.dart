@@ -1,3 +1,4 @@
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
   @override
   // ignore: must_call_super
   void initState() {
+     AutoOrientation.fullAutoMode();
     index = 2;
   }
   

@@ -10,7 +10,7 @@ class DeletCommentService {
       throw Exception();
     } else {
       http.Response response = await http.delete(
-          Uri.parse("${ServiceConfig.base_url}/api/comments/$id"),
+          Uri.parse("${ServiceConfig.base_url}/api/v1/comments/$id"),
           headers: {'Authorization': 'Bearer $token'});
       Map<String, dynamic> deletData =
           jsonDecode(utf8.decode(response.bodyBytes));

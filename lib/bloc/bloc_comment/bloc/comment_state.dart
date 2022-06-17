@@ -12,7 +12,7 @@ class loadingComments extends CommentState {}
 class NOComments extends CommentState {}
 
 class CreateComments extends CommentState {
-  Comments? comments;
+  CommentModel? comments;
 
   CreateComments({
     required this.comments,

@@ -1,3 +1,4 @@
+import 'package:ajyal/bloc/bloc_badge/bloc/badge_bloc.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_badged/badge_position.dart';
@@ -9,28 +10,27 @@ import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 import 'package:ajyal/models/books_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String _url = 'https://flutter.dev';
-
 class BooksUI extends StatelessWidget {
-  BooksUI({Key? key}) : super(key: key);
+  const BooksUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<BooksBloc>(context).add(LoadBooksEvent());
     BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
+      BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
 
     return BlocBuilder<BooksBloc, BooksState>(
       builder: (context, state) {
         if (state is LoadingBooks) {
           return Center(child: Lottie.asset("assets/lottie/loading.json"));
         } else if (state is FetchBooks) {
-          List<BooksModel> c = state.categoryBook;
+          List<Data>? c = state.categoryBook.data;
           List<Widget> _tab = [];
           List<Widget> _view = [];
-          for (int index = 0; index < c.length; index++) {
-            List<Books>? s = state.categoryBook[index].books;
+          for (int index = 0; index < c!.length; index++) {
+            List<Books>? s = state.categoryBook.data?[index].books;
 
-            _tab.add(Text("${state.categoryBook[index].name}"));
+            _tab.add(Text("${state.categoryBook.data?[index].name}"));
             List<Widget> _children = [];
 
             _view.add(GridView(
@@ -85,7 +85,7 @@ class BooksUI extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: Text('${s[ind].name} ',
+                            child: Text('${s[ind].title} ',
                                 style: const TextStyle(
                                     color: Color(0xff26da76),
                                     fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class BooksUI extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0, left: 8),
                             child: Text(
-                              'المؤلف:${s[ind].auther}',
+                              'المؤلف:${s[ind].author}',
                               style: const TextStyle(
                                   color: Color(0xff665589), fontSize: 15),
                             ),
@@ -167,7 +167,8 @@ class Section1 extends StatelessWidget {
       builder: (context, state) {
         if (state is Loading1State) {
           return Center();
-        } else if (state is Successed123State) {
+        } else if (state is Successed12356State) {
+          var data = state.data.data;
           return ListView.builder(
               itemCount: 1,
               itemBuilder: (context, index) {
@@ -187,117 +188,143 @@ class Section1 extends StatelessWidget {
                               // barrierColor: Color(0xffc4e5ff),
                               builder: (ctxt) {
                                 return AlertDialog(
-                                  title: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 15.0),
-                                            child: Text("الاسم : ",
-                                                style: TextStyle(
-                                                  color: Color(0xff665589),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 17,
-                                                )),
-                                          ),
-                                          Text("${state.data.login}",
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17,
-                                              )),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: const [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 15.0),
-                                            child: Text("الحالة : ",
-                                                style: TextStyle(
-                                                  color: Color(0xff665589),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 17,
-                                                )),
-                                          ),
-                                          Text("أشرق وكأن الكون كله لك ..",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 17,
-                                              )),
-                                        ],
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const Expanded(
-                                              flex: 5,
-                                              child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 8.0),
-                                                child: Text("كؤوس الكورسات: ",
-                                                    style: TextStyle(
-                                                      color: Color(0xff665589),
+                                  title: BlocBuilder<BadgeBloc, BadgeState>(
+                                    builder: (context, state) {
+                                      if (state is LoadingBadge) {
+                                        return Center();
+                                      } else if (state is FetchBadge) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 15.0),
+                                                  child: Text("الاسم : ",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff665589),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 17,
+                                                      )),
+                                                ),
+                                                Text("${data?.name}",
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 17,
                                                     )),
-                                              )),
-                                          FlutterBadge(
-                                            icon: Image.asset(
-                                              "assets/image/collection.jpg",
-                                              height: 30,
-                                              width: 30,
+                                              ],
                                             ),
-                                            badgeColor: Colors.white70,
-                                            badgeTextColor: Color(0xff665589),
-                                            position: BadgePosition.topRight(),
-                                            itemCount: 10,
-                                            borderRadius: 20,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Expanded(
-                                              flex: 5,
-                                              child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 8.0),
-                                                child: Text("كؤوس الكتب: ",
-                                                    style: TextStyle(
-                                                      color: Color(0xff665589),
+                                            Row(
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 15.0),
+                                                  child: Text("الحالة : ",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff665589),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 17,
+                                                      )),
+                                                ),
+                                                Text(
+                                                    "${data?.student?.bio}",
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 17,
                                                     )),
-                                              )),
-                                          FlutterBadge(
-                                            icon: Image.asset(
-                                              "assets/image/diary.png",
-                                              height: 50,
-                                              width: 50,
+                                              ],
                                             ),
-                                            badgeColor: Colors.white70,
-                                            badgeTextColor: Color(0xff665589),
-                                            position: BadgePosition.topRight(),
-                                            itemCount: 20,
-                                            borderRadius: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                const Expanded(
+                                                    flex: 5,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 8.0),
+                                                      child: Text(
+                                                          "أوسمة المهارات:",
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xff665589),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 17,
+                                                          )),
+                                                    )),
+                                                FlutterBadge(
+                                                  icon: Image.asset(
+                                                    "assets/image/collection.jpg",
+                                                    height: 30,
+                                                    width: 30,
+                                                  ),
+                                                  badgeColor: Colors.white70,
+                                                  badgeTextColor:
+                                                      Color(0xff665589),
+                                                  position:
+                                                      BadgePosition.topRight(),
+                                                  itemCount: state.badge.coursesCount!.length,
+                                                  borderRadius: 20,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Expanded(
+                                                    flex: 5,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 8.0),
+                                                      child: Text(
+                                                          "أوسمة الكتب:",
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xff665589),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 17,
+                                                          )),
+                                                    )),
+                                                FlutterBadge(
+                                                  icon: Image.asset(
+                                                    "assets/image/diary.png",
+                                                    height: 50,
+                                                    width: 50,
+                                                  ),
+                                                  badgeColor: Colors.white70,
+                                                  badgeTextColor:
+                                                      Color(0xff665589),
+                                                  position:
+                                                      BadgePosition.topRight(),
+                                                  itemCount: state.badge.booksCount!.length,
+                                                  borderRadius: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return Image.asset(
+                                            "assets/image/no-results-found.png");
+                                      }
+                                    },
                                   ),
                                 );
                               });
@@ -323,7 +350,7 @@ class Section1 extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 5.0, left: 5),
                           child: Text(
-                            "مرحباً ${state.data.login}",
+                            "مرحباً ${state.data.data?.name}",
                             style: const TextStyle(
                                 color: Color(0xff26da76),
                                 fontWeight: FontWeight.bold,
@@ -413,7 +440,7 @@ class WidgetOneBook extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.only(right: 30, top: 10),
-                              child: Text('${b.name} ',
+                              child: Text('${b.title} ',
                                   style: const TextStyle(
                                       color: Color(0xff26da76),
                                       fontWeight: FontWeight.bold,
@@ -424,7 +451,6 @@ class WidgetOneBook extends StatelessWidget {
                                     const EdgeInsets.only(top: 10.0, left: 30),
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                   
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               const Color(0xff26da76))),
@@ -465,7 +491,7 @@ class WidgetOneBook extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 16.0),
-                                  child: Text("${b.auther}",
+                                  child: Text("${b.author}",
                                       style: const TextStyle(
                                           color: Colors.white,
                                           // fontWeight: FontWeight.bold,
@@ -484,8 +510,7 @@ class WidgetOneBook extends StatelessWidget {
                                           fontSize: 10)),
                                   ElevatedButton(
                                     onPressed: () async {
-                                      const _url =
-                                          "https://pub.dev/packages/url_launcher";
+                                      final _url = "${b.link}";
                                       if (await canLaunch(_url)) {
                                         await launch(_url,
                                             forceSafariVC: false);
@@ -513,7 +538,7 @@ class WidgetOneBook extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16.0),
-                          child: Text("${b.title}",
+                          child: Text("${b.description}",
                               style: const TextStyle(
                                   color: Colors.white,
                                   // fontWeight: FontWeight.bold,

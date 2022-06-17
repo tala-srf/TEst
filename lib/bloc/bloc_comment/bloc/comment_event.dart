@@ -5,7 +5,7 @@ abstract class CommentEvent {}
 
 
 class CreateCommentEvent extends CommentEvent {
-Comments create;
+CommentModel create;
 
 
   CreateCommentEvent({required this.create});

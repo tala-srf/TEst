@@ -8,7 +8,7 @@ class PostsInitial extends PostsState {}
 class loadingPosts extends PostsState {}
 
 class FetchPosts extends PostsState {
-  List<PostModel> posts;
+PostModel posts;
 
 
   FetchPosts({required this.posts});

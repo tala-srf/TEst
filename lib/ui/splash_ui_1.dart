@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class _SplashUI1State extends State<SplashUI1> {
   @override
   void initState() {
     super.initState();
+       AutoOrientation.portraitAutoMode();
 
     timer =
         Timer.periodic(const Duration(seconds: 4), (_) => setState(() => count += 1));

@@ -6,8 +6,9 @@ abstract class AlluserState {}
 class AlluserInitial extends AlluserState {}
 
 class SuccessedState extends AlluserInitial {
-   List<DataUserModel>? data1;
-  SuccessedState({required this.data1});
+   List<TopModel>? data1;
+   List<TopModel>? data2;
+  SuccessedState({required this.data1,this.data2});
 }
 
 class NoConnectionState extends AlluserInitial {}

@@ -4,21 +4,18 @@ import 'package:ajyal/service/config.dart';
 import 'dart:convert';
 
 class PostService {
-  Future<List<PostModel>> getallpost(String token) async {
+  Future<PostModel> getallpost(String token) async {
     if (token == 'EMPTY_TOKEN') {
       throw Exception();
     } else {
       http.Response response = await http.get(
-          Uri.parse('${ServiceConfig.base_url}/api/posts'),
+          Uri.parse('${ServiceConfig.base_url}/api/v1/posts'),
           headers: {'Authorization': 'Bearer $token'});
+ Map<String, dynamic> userData =jsonDecode(utf8.decode(response.bodyBytes));
+      PostModel posts = PostModel.fromJson(userData);
+     
 
-      List posts = jsonDecode(utf8.decode(response.bodyBytes)) as List;
-
-      return posts.map((e) => PostModel.fromJson(e)).toList(growable: true);
+      return posts;
     }
-  
   }
-
-
- 
 }

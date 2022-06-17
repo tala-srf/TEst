@@ -1,3 +1,3 @@
 class ServiceConfig {
-  static const base_url = 'https://my-monolith-app.herokuapp.com:443';
+  static const base_url = 'https://glacial-garden-81387.herokuapp.com';
 }

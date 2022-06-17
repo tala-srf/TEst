@@ -21,10 +21,10 @@ class DatauserBloc extends Bloc<DatauserEvent, DatauserState> {
               'EMPTY_TOKEN',
         );
 
-        emit(Successed123State(data: data));
+        emit(Successed12356State(data: data));
           SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setInt('id_user', data.id ?? 0);
+           sharedPreferences.setInt('id_student', data.data?.student?.id ?? 0);
       
       } 
       catch (e) {

@@ -9,7 +9,7 @@ class BooksInitial extends BooksState {}
 class LoadingBooks extends BooksState {}
 
 class FetchBooks extends BooksState {
-  List<BooksModel> categoryBook;
+  BooksModel categoryBook;
 
   FetchBooks({required this.categoryBook});
 }
