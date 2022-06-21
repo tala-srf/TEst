@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class Splash3UI extends StatelessWidget {
-const Splash3UI({Key? key}) : super(key: key);
+  const Splash3UI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:const Color(0xff7a489d),
+      backgroundColor: const Color(0xff7a489d),
       body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -27,7 +27,7 @@ const Splash3UI({Key? key}) : super(key: key);
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-         //           //fontStyle: FontStyle.italic,
+                    //           //fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w800),
               ),
               const Text(
@@ -35,7 +35,7 @@ const Splash3UI({Key? key}) : super(key: key);
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
-         //           //fontStyle: FontStyle.italic,
+                    //           //fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w800),
               ),
               Row(
@@ -71,7 +71,7 @@ const Splash3UI({Key? key}) : super(key: key);
                         style: TextStyle(
                             color: Color(0xff7a489d),
                             fontSize: 25,
-                 //           //fontStyle: FontStyle.italic,
+                            //           //fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.w800),
                       )
                     ],
@@ -84,7 +84,9 @@ const Splash3UI({Key? key}) : super(key: key);
                           elevation: 8,
                           borderRadius: BorderRadius.circular(28),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed("/kids");
+                            },
                             splashColor: Colors.black26,
                             child: Lottie.asset(
                               "assets/lottie/lf20_laBOSy.json",
@@ -99,7 +101,7 @@ const Splash3UI({Key? key}) : super(key: key);
                         style: TextStyle(
                             color: Color(0xff26da76),
                             fontSize: 25,
-                 //           //fontStyle: FontStyle.italic,
+                            //           //fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.w800),
                       )
                     ],

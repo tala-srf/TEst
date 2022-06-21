@@ -5,8 +5,10 @@ import 'package:ajyal/bloc/bloc_delet_like/bloc/deletlike_bloc.dart';
 import 'package:ajyal/bloc/bloc_enrollment/bloc/enrollment_bloc.dart';
 import 'package:ajyal/bloc/bloc_lecture/bloc/finishedlecture_bloc.dart';
 import 'package:ajyal/bloc/bloc_like/bloc/like_bloc.dart';
+import 'package:ajyal/ui/kids.dart';
 
 import 'package:ajyal/ui/pdf_view_ui.dart';
+import 'package:ajyal/ui/tabquha.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -123,7 +125,7 @@ class MainApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.toString() == 'EMPTY_TOKEN') {
-              return const SplashUI1();
+              return const Splash3UI();
             } else {
               return Home();
             }
@@ -162,6 +164,8 @@ class MainApp extends StatelessWidget {
           '/newaccount': (ctxt) => NewAcccont(),
           "/splash1": (cxtc) => SplashUI1(),
           "/pdf": (cxtc) => PdfView(),
+          "/kids": (cxtc) => Kids(),
+           "/game": (cxtc) => Game(),
         },
         home: example1);
   }
