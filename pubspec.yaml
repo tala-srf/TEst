@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.0-116.0.dev <3.0.0"
+  sdk: '>=2.18.0-165.1.beta <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -61,6 +61,7 @@ dependencies:
     sdk: flutter  
   intl: ^0.17.0
 
+
   
   
 dev_dependencies:
@@ -72,7 +73,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -95,17 +96,16 @@ flutter:
       - assets/lottie/lf20_laBOSy.json
       - assets/image/5143499.png
       - assets/image/6497889.png
-      - assets/image/Asset 3.png
-      - assets/image/بدون عنوان.png
-      - assets/image/Asset 5 (2).png
+      - assets/image/with.png
+      - assets/image/Asset5.png
       - assets/image/Asset 1@4x1.png
       - assets/image/asd.png
       - assets/image/Untitled-1.png
       - assets/image/character-2218201.png
       - assets/image/holding-smartphone.png
       - assets/image/no-results-found.png
-      - assets/image/Avatar-20.png
-      - assets/image/AVATARZ - Tomas.png
+      - assets/image/Avatar2.png
+      - assets/image/AVATARZ.png
       - assets/image/cryptocurrency-encryption.png
       - assets/image/earth.png
       - assets/image/collection.jpg
@@ -116,8 +116,9 @@ flutter:
       - assets/image/1234.png
       - assets/image/PSDMarchNook116.png
       - assets/image/wordmark.png
-      - assets/image/Group 1900.png
+      - assets/image/Group900.png
       - assets/image/63.png
+      - assets/image/home.png
       - assets/image/rfid-card-500x500.png
       - assets/image/online.png
       - assets/video/vvv.mp4

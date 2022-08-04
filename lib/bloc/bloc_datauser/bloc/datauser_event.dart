@@ -3,6 +3,6 @@ part of 'datauser_bloc.dart';
 @immutable
 abstract class DatauserEvent {}
 
-class LoaddataEvent extends DatauserEvent {
-  LoaddataEvent();
+class LoaddatEvent extends DatauserEvent {
+  LoaddatEvent();
 }

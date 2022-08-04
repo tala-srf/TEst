@@ -21,17 +21,17 @@ class _SplashUI1State extends State<SplashUI1> {
     super.initState();
        AutoOrientation.portraitAutoMode();
 
-    timer =
-        Timer.periodic(const Duration(seconds: 4), (_) => setState(() => count += 1));
+    // timer =
+    //     Timer.periodic(const Duration(seconds: 4), (_) => setState(() => count += 1));
      timer = Timer.periodic(
          const Duration(seconds: 4),
          (_) =>
              setState(() => Navigator.of(context).popAndPushNamed('/splash2')));
   }
 
-  Widget _renderWidget() {
-    return count == 0 ? _renderWidget1() : _renderWidget2();
-  }
+  // Widget _renderWidget() {
+  //   return count == 0 ? _renderWidget1() : _renderWidget2();
+  // }
 
   @override
   void dispose() {
@@ -57,15 +57,15 @@ class _SplashUI1State extends State<SplashUI1> {
     );
   }
 
-  Widget _renderWidget2() {
-    return const Image(
-      image: AssetImage("assets/image/Asset 5 (2).png"),
-      fit: BoxFit.fill,
-      height: 150,
-      width: 150,
-      alignment: Alignment.center,
-    );
-  }
+  // Widget _renderWidget2() {
+  //   return const Image(
+  //     image: AssetImage("assets/image/Asset5.png"),
+  //     fit: BoxFit.fill,
+  //     height: 150,
+  //     width: 150,
+  //     alignment: Alignment.center,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _SplashUI1State extends State<SplashUI1> {
             width: double.infinity,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage("assets/image/بدون عنوان.png"),
+              image: AssetImage("assets/image/with.png"),
               fit: BoxFit.fill,
               alignment: Alignment.center,
             )),

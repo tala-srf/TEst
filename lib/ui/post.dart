@@ -33,7 +33,7 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<PostsBloc>(context).add(LoadEvent());
-    BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
+    BlocProvider.of<DatauserBloc>(context).add(LoaddatEvent());
 
     return ListPosts(createcommentController: createcommentController);
   }
@@ -102,8 +102,8 @@ class _ListPostsState extends State<ListPosts> {
                           children: [
                             ListTile(
                               leading: const CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/image/AVATARZ - Tomas.png"),
+                                backgroundImage:
+                                    AssetImage("assets/image/AVATARZ.png"),
                                 backgroundColor: Color(0xff26da76),
                               ),
                               title: Text(
@@ -128,10 +128,7 @@ class _ListPostsState extends State<ListPosts> {
                             ),
                             state.posts.data![index].images != null
                                 ? Image.network(
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzrtaXGkXhkLIV4Du-Lg0JPJ5I84RQb8RvIA&usqp=CAU",
-                                    width: double.infinity,
-                                    height: 300,
-                                  )
+                                    "${state.posts.data![index].images}")
                                 : Text(""),
                             ContainerWidget(
                               createcommentController:
@@ -211,15 +208,15 @@ class CommentButton1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return TextButton(     
       onPressed: () async {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         Scaffold.of(con).showBottomSheet((context) {
           return BlocBuilder<PostsBloc, PostsState>(builder: (context, state) {
-            if (state is loadingPosts || state is PostsInitial) {
-              return Center(child: Lottie.asset("assets/lottie/loading.json"));
-            }
+            // if (state is loadingPosts || state is PostsInitial) {
+            //   return Center(child: Lottie.asset("assets/lottie/loading.json"));
+            // }
             if (state is FetchPosts) {
               sharedPreferences.setInt(
                   'id_post', state.posts.data![index].id ?? 0);
@@ -235,8 +232,7 @@ class CommentButton1 extends StatelessWidget {
                     Builder(builder: (context) {
                       return BlocBuilder<DatauserBloc, DatauserState>(
                           builder: (context, stat) {
-                        if (stat is Successed12356State) {
-                           
+                        if (stat is Success12356State) {
                           return Expanded(
                             flex: 17,
                             child: ListView.builder(
@@ -264,7 +260,7 @@ class CommentButton1 extends StatelessWidget {
                                       child: const CircleAvatar(
                                         radius: 25,
                                         backgroundImage: AssetImage(
-                                            "assets/image/Avatar-20.png"),
+                                            "assets/image/Avatar2.png"),
                                         backgroundColor: Color(0xff665589),
                                       ),
                                     )),
@@ -415,7 +411,7 @@ class LikeButten extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(builder: (context, stat) {
-      if (stat is Successed12356State) {
+      if (stat is Success12356State) {
         return BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
             int? r2 = stat.data.data?.student?.id;
@@ -516,7 +512,7 @@ class CreateComment extends StatelessWidget {
         children: [
           Container(
             width: MediaQuery.of(context).size.width * 0.7,
-            child: TextFormField(
+            child: TextField(
               cursorColor: Colors.black26,
               decoration: const InputDecoration(
                 fillColor: Colors.white30,
@@ -535,7 +531,7 @@ class CreateComment extends StatelessWidget {
           ),
           BlocBuilder<DatauserBloc, DatauserState>(
             builder: (context, state) {
-              if (state is Successed12356State) {
+              if (state is Success12356State) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
@@ -573,114 +569,3 @@ class CreateComment extends StatelessWidget {
   }
 }
 
-// class DataUserComment extends StatelessWidget {
-//   const DataUserComment({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: Column(
-//         children: [
-//           Row(
-//             children: const [
-//               Padding(
-//                 padding: EdgeInsets.only(right: 15.0),
-//                 child: Text("الاسم : ",
-//                     style: TextStyle(
-//                       color: Color(0xff665589),
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 17,
-//                     )),
-//               ),
-//               Text("user",
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 17,
-//                   )),
-//             ],
-//           ),
-//           Row(
-//             children: const [
-//               Padding(
-//                 padding: EdgeInsets.only(right: 15.0),
-//                 child: Text("الحالة : ",
-//                     style: TextStyle(
-//                       color: Color(0xff665589),
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 17,
-//                     )),
-//               ),
-//               Text("أشرق وكأن الكون كله لك ..",
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 17,
-//                   )),
-//             ],
-//           ),
-//           Row(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             mainAxisSize: MainAxisSize.max,
-//             mainAxisAlignment: MainAxisAlignment.spaceAround,
-//             children: [
-//               const Expanded(
-//                   flex: 5,
-//                   child: Padding(
-//                     padding: EdgeInsets.only(right: 8.0),
-//                     child: Text("كؤوس الكورسات: ",
-//                         style: TextStyle(
-//                           color: Color(0xff665589),
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 17,
-//                         )),
-//                   )),
-//               FlutterBadge(
-//                 icon: Image.asset(
-//                   "assets/image/collection.jpg",
-//                   height: 30,
-//                   width: 30,
-//                 ),
-//                 badgeColor: Colors.white70,
-//                 badgeTextColor: Color(0xff665589),
-//                 position: BadgePosition.topRight(),
-//                 itemCount: 10,
-//                 borderRadius: 20,
-//               ),
-//             ],
-//           ),
-//           Row(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             mainAxisSize: MainAxisSize.max,
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               const Expanded(
-//                   flex: 5,
-//                   child: Padding(
-//                     padding: EdgeInsets.only(right: 8.0),
-//                     child: Text("كؤوس الكتب: ",
-//                         style: TextStyle(
-//                           color: Color(0xff665589),
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 17,
-//                         )),
-//                   )),
-//               FlutterBadge(
-//                 icon: Image.asset(
-//                   "assets/image/diary.png",
-//                   height: 50,
-//                   width: 50,
-//                 ),
-//                 badgeColor: Colors.white70,
-//                 badgeTextColor: Color(0xff665589),
-//                 position: BadgePosition.topRight(),
-//                 itemCount: 20,
-//                 borderRadius: 20,
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

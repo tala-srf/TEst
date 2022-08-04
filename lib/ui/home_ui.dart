@@ -2,7 +2,7 @@ import 'package:auto_orientation/auto_orientation.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ajyal/bloc/bloc_auth/bloc/auth_bloc.dart';
@@ -45,13 +45,25 @@ class _HomeState extends State<Home> {
         resizeToAvoidBottomInset: false, //لح
 
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: Button(),
-        body: Container(
+        floatingActionButton: const Button(),
+        body:  MediaQuery.of(context).size.height / MediaQuery.of(context).size.width > 1 ? Container(
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
               image: DecorationImage(
             image: AssetImage("assets/image/Untitled-1.png"),
+            fit: BoxFit.fill,
+            alignment: Alignment.center,
+          )),
+          child: Center(
+            child: pages[index],
+          ),
+        ):Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/image/home.png"),
             fit: BoxFit.fill,
             alignment: Alignment.center,
           )),

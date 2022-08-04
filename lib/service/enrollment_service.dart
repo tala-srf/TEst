@@ -12,7 +12,7 @@ class EnrollmentService {
       throw Exception();
     } else {
       http.Response response = await http.post(
-          Uri.parse('${ServiceConfig.base_url}/api/v1/enrollments'),
+          Uri.parse('${ServiceConfig.base_url}api/v1/enrollments'),
           body: jsonEncode(create),
           headers: {
             'Authorization': 'Bearer $token',

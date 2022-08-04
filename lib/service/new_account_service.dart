@@ -7,7 +7,7 @@ import 'dart:convert';
 class NewAccountService {
   Future<NewAccountModel?> createaccount(NewAccountModel account ,) async {
     http.Response response = await http.post(
-        Uri.parse("${ServiceConfig.base_url}/api/v1/register"),
+        Uri.parse("${ServiceConfig.base_url}api/v1/register"),
         body: jsonEncode(account),
         headers: {
           'Content-Type': 'application/json',

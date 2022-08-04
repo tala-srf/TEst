@@ -1,6 +1,7 @@
 
 
 import 'package:bloc/bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 import 'package:ajyal/models/signin_model.dart';
@@ -13,22 +14,22 @@ part 'datauser_state.dart';
 
 class DatauserBloc extends Bloc<DatauserEvent, DatauserState> {
   DatauserBloc() : super(DatauserInitial()) {
-    on<LoaddataEvent>((event, emit) async {
-      emit(Loading1State());
+    on<LoaddatEvent>((event, emit) async {
+      emit(LoadState());
       try {
         DataUserModel data = await userService.datauser1(
           (await SharedPreferences.getInstance()).getString('backend_token') ??
               'EMPTY_TOKEN',
         );
 
-        emit(Successed12356State(data: data));
+        emit(Success12356State(data: data));
           SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
            sharedPreferences.setInt('id_student', data.data?.student?.id ?? 0);
       
       } 
       catch (e) {
-        emit(EState());
+        emit(E());
       }
     });
   }

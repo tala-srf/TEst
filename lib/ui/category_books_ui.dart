@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:ajyal/bloc/bloc_books/bloc/books_bloc.dart';
 import 'package:ajyal/bloc/bloc_datauser/bloc/datauser_bloc.dart';
 import 'package:ajyal/models/books_model.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BooksUI extends StatelessWidget {
@@ -16,8 +17,8 @@ class BooksUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<BooksBloc>(context).add(LoadBooksEvent());
-    BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
-      BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
+    BlocProvider.of<DatauserBloc>(context).add(LoaddatEvent());
+    BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
 
     return BlocBuilder<BooksBloc, BooksState>(
       builder: (context, state) {
@@ -165,9 +166,10 @@ class Section1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(
       builder: (context, state) {
-        if (state is Loading1State) {
+        if (state is LoadState) {
           return Center();
-        } else if (state is Successed12356State) {
+        } else if (state is Success12356State) {
+          String? imge = state.data.data?.student?.images;
           var data = state.data.data;
           return ListView.builder(
               itemCount: 1,
@@ -232,13 +234,12 @@ class Section1 extends StatelessWidget {
                                                         fontSize: 17,
                                                       )),
                                                 ),
-                                                Text(
-                                                    "${data?.student?.bio}",
+                                                Text("${data?.student?.bio}",
                                                     style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 17,
+                                                      fontSize: 11,
                                                     )),
                                               ],
                                             ),
@@ -275,7 +276,8 @@ class Section1 extends StatelessWidget {
                                                       Color(0xff665589),
                                                   position:
                                                       BadgePosition.topRight(),
-                                                  itemCount: state.badge.coursesCount!.length,
+                                                  itemCount: state.badge
+                                                      .coursesCount!.length,
                                                   borderRadius: 20,
                                                 ),
                                               ],
@@ -313,7 +315,8 @@ class Section1 extends StatelessWidget {
                                                       Color(0xff665589),
                                                   position:
                                                       BadgePosition.topRight(),
-                                                  itemCount: state.badge.booksCount!.length,
+                                                  itemCount: state
+                                                      .badge.booksCount!.length,
                                                   borderRadius: 20,
                                                 ),
                                               ],
@@ -329,11 +332,24 @@ class Section1 extends StatelessWidget {
                                 );
                               });
                         },
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 32,
-                          backgroundImage:
-                              AssetImage("assets/image/Avatar-20.png"),
                           backgroundColor: Color(0xff665589),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(32),
+                              ),
+                              color: Color(0xff665589),
+                              image: DecorationImage(
+                                image: imge == null
+                                    ? NetworkImage("")
+                                    : NetworkImage(imge),
+                                fit: BoxFit.fill,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ),
                         ),
                       )),
                     ),
@@ -455,7 +471,12 @@ class WidgetOneBook extends StatelessWidget {
                                           MaterialStateProperty.all(
                                               const Color(0xff26da76))),
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed("/pdf");
+                                    Navigator.of(context).push<void>(
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) =>
+                                            PdfView(title: b.title,pdf: b.pdf),
+                                      ),
+                                    );
                                   },
                                   child: const Text('قراءة الكتاب',
                                       style: TextStyle(
@@ -549,6 +570,49 @@ class WidgetOneBook extends StatelessWidget {
               )),
         ),
       ],
+    );
+  }
+}
+
+class PdfView extends StatefulWidget {
+  PdfView({Key? key, required this.title, required this.pdf}) : super(key: key);
+  final String? title;
+  final String? pdf;
+
+  @override
+  _PdfView createState() => _PdfView();
+}
+
+class _PdfView extends State<PdfView> {
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title!),
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.bookmark,
+        //       color: Colors.white,
+        //       semanticLabel: 'Bookmark',
+        //     ),
+        //     onPressed: () {
+        //       _pdfViewerKey.currentState?.openBookmarkView();
+        //     },
+        //   ),
+        // ],
+      ),
+      body: SfPdfViewer.network(
+        widget.pdf!,
+        key: _pdfViewerKey,
+      ),
     );
   }
 }

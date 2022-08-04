@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Game extends StatefulWidget {
   const Game({Key? key}) : super(key: key);
@@ -12,16 +13,16 @@ class _GameState extends State<Game> {
 
   // ignore: prefer_final_fields
   List _select = [
-    Screen1(),
-    Screen2(),
-    Screen3(),
+    const Screen1(),
+    const Screen2(),
+    const Screen3(),
   ];
   @override
   void initState() {
     super.initState();
 
     // ignore: unused_local_variable
-    Widget _widge = _select[0];
+    Widget widge = _select[0];
   }
 
   nextScreen() {
@@ -29,7 +30,7 @@ class _GameState extends State<Game> {
       x++;
       setState(() {
         // ignore: unused_local_variable
-        Widget _widge = _select[x];
+        Widget widge = _select[x];
       });
     }
   }
@@ -39,7 +40,7 @@ class _GameState extends State<Game> {
       x--;
       setState(() {
         // ignore: unused_local_variable
-        Widget _widge = _select[x];
+        Widget widge = _select[x];
       });
     }
   }
@@ -146,7 +147,16 @@ class _GameState extends State<Game> {
                 ],
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async{
+                     const _url = "https://drive.google.com/file/d/1zt_aN1RD-l0H_1XltRf2vBtUO4B8fSDP/view?usp=sharing";
+                                      if (await canLaunch(_url)) {
+                                        await launch(_url,
+                                            forceSafariVC: false);
+                                      } else {
+                                        // ignore: avoid_print
+                                        print("object");
+                                      }
+                },
                 child: Center(
                   child: Container(
                     height: 40,
@@ -181,7 +191,7 @@ class Screen1 extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Image.asset("assets/image/Group 1900.png",
+        Image.asset("assets/image/Group900.png",
             height: MediaQuery.of(context).size.height * 0.2),
         const Center(
             child: Text(
@@ -308,7 +318,7 @@ class Screen3 extends StatelessWidget {
             children: const [
               Center(
                   child: Text(
-                "أحب عن الأسئلة من خلال مطابقة الصورة",
+                "أجب عن الأسئلة من خلال مطابقة الصورة",
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

@@ -19,7 +19,7 @@ class SplashPage extends StatelessWidget {
           )),
           child: const Center(
             child: Image(
-              image: AssetImage("assets/image/Asset 5 (2).png"),
+              image: AssetImage("assets/image/Asset5.png"),
               fit: BoxFit.fill,
               height: 150,
               width: 150,

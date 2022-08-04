@@ -10,7 +10,7 @@ class SignInService {
     AuthModel usermodel,
   ) async {
     http.Response response = await http.post(
-      Uri.parse('${ServiceConfig.base_url}/api/v1/login'),
+      Uri.parse('${ServiceConfig.base_url}api/v1/login'),
       body: jsonEncode(usermodel),
       headers: {'Content-Type': 'application/json'},
     );

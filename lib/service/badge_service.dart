@@ -12,7 +12,7 @@ class BadgeService {
       throw Exception();
     } else {
       http.Response response = await http.get(
-          Uri.parse('${ServiceConfig.base_url}/api/v1/badges'),
+          Uri.parse('${ServiceConfig.base_url}api/v1/badges'),
           headers: {'Authorization': 'Bearer $token'});
    Map<String, dynamic> userData =jsonDecode(utf8.decode(response.bodyBytes));
       BadgeModel badge = BadgeModel.fromJson(userData);

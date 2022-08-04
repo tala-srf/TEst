@@ -10,7 +10,7 @@ class DataSignin {
       throw Exception();
     } else {
       http.Response response = await http.get(
-        Uri.parse('${ServiceConfig.base_url}/api/v1/top-ten'),
+        Uri.parse('${ServiceConfig.base_url}api/v1/top-ten'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'accept': 'application/json; charset=UTF-8',
@@ -35,7 +35,7 @@ class DataSignin {
       throw Exception();
     } else {
       http.Response response = await http.get(
-        Uri.parse('${ServiceConfig.base_url}/api/v1/top-ten'),
+        Uri.parse('${ServiceConfig.base_url}api/v1/top-ten'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'accept': 'application/json; charset=UTF-8',

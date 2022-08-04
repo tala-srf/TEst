@@ -11,7 +11,7 @@ class BooksService {
       throw Exception();
     } else {
       http.Response response = await http.get(
-          Uri.parse('${ServiceConfig.base_url}/api/v1/categoriesbooks'),
+          Uri.parse('${ServiceConfig.base_url}api/v1/categoriesbooks'),
           headers: {'Authorization': 'Bearer $token'});
    Map<String, dynamic> userData =jsonDecode(utf8.decode(response.bodyBytes));
       BooksModel books = BooksModel.fromJson(userData);

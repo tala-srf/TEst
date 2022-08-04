@@ -13,7 +13,7 @@ class FinishedLectureService {
       throw Exception();
     } else {
       http.Response response = await http.post(
-          Uri.parse('${ServiceConfig.base_url}/api/v1/finished_lecture'),
+          Uri.parse('${ServiceConfig.base_url}api/v1/finished_lecture'),
           body: jsonEncode(create),
           headers: {
             'Authorization': 'Bearer $token',

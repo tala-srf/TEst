@@ -30,7 +30,7 @@ class CoursesUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<CoursesblocBloc>(context).add(LoadCoursesEvent());
-    BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
+    BlocProvider.of<DatauserBloc>(context).add(LoaddatEvent());
 
     BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
 
@@ -442,9 +442,10 @@ class Section1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(
       builder: (context, state) {
-        if (state is Loading1State) {
+        if (state is LoadState) {
           return Center();
-        } else if (state is Successed12356State) {
+        } else if (state is Success12356State) {
+            String?  imge = state.data.data?.student?.images;
           var data = state.data.data;
           return ListView.builder(
               itemCount: 1,
@@ -514,7 +515,7 @@ class Section1 extends StatelessWidget {
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 17,
+                                                      fontSize: 11,
                                                     )),
                                               ],
                                             ),
@@ -607,11 +608,21 @@ class Section1 extends StatelessWidget {
                                 );
                               });
                         },
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 32,
-                          backgroundImage:
-                              AssetImage("assets/image/Avatar-20.png"),
+                         
                           backgroundColor: Color(0xff665589),
+                          child: Container(decoration:    BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(32),
+                          ),
+                          color:Color(0xff665589),
+                          image: DecorationImage(
+              image: imge == null ? NetworkImage("") :NetworkImage(imge) ,
+              fit: BoxFit.fill,
+              alignment: Alignment.center,
+            ),
+                        ),),
                         ),
                       )),
                     ),

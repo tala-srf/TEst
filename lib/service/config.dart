@@ -1,3 +1,3 @@
 class ServiceConfig {
-  static const base_url = 'https://glacial-garden-81387.herokuapp.com';
+  static const base_url = 'http://ajyal.neotech-s.com/';
 }

@@ -31,7 +31,7 @@ class FavoriteUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<PostsBloc>(context).add(LoadEvent());
-    BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
+    BlocProvider.of<DatauserBloc>(context).add(LoaddatEvent());
     BlocProvider.of<CoursesblocBloc>(context).add(LoadCoursesEvent());
     BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
     return MagicWidget(
@@ -299,9 +299,10 @@ class Section1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(
       builder: (context, state) {
-        if (state is Loading1State) {
+        if (state is LoadState) {
           return Center();
-        } else if (state is Successed12356State) {
+        } else if (state is Success12356State) {
+            String?  imge = state.data.data?.student?.images;
           var data = state.data.data;
           return ListView.builder(
               itemCount: 1,
@@ -371,7 +372,7 @@ class Section1 extends StatelessWidget {
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 17,
+                                                      fontSize: 11,
                                                     )),
                                               ],
                                             ),
@@ -464,11 +465,21 @@ class Section1 extends StatelessWidget {
                                 );
                               });
                         },
-                        child: const CircleAvatar(
+                        child:  CircleAvatar(
                           radius: 32,
-                          backgroundImage:
-                              AssetImage("assets/image/Avatar-20.png"),
+                         
                           backgroundColor: Color(0xff665589),
+                          child: Container(decoration:    BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(32),
+                          ),
+                          color:Color(0xff665589),
+                          image: DecorationImage(
+              image: imge == null ? NetworkImage("") :NetworkImage(imge) ,
+              fit: BoxFit.fill,
+              alignment: Alignment.center,
+            ),
+                        ),),
                         ),
                       )),
                     ),
@@ -518,7 +529,7 @@ class Section2 extends StatelessWidget {
               itemBuilder: (context, index) {
                 return BlocBuilder<DatauserBloc, DatauserState>(
                   builder: (context, state) {
-                    if (state is Successed12356State) {
+                    if (state is Success12356State) {
                       int? i = state.data.data?.student?.id;
                       // String? i1 = state.data.login;
                       index;
@@ -556,7 +567,7 @@ class Section2 extends StatelessWidget {
                                       ListTile(
                                         leading: const CircleAvatar(
                                           backgroundImage: AssetImage(
-                                              "assets/image/AVATARZ - Tomas.png"),
+                                              "assets/image/AVATARZ.png"),
                                           backgroundColor: Color(0xff26da76),
                                         ),
                                         title: Text(
@@ -603,7 +614,7 @@ class Section2 extends StatelessWidget {
                           }
                         },
                       );
-                    } else if (state is Loading1State) {
+                    } else if (state is LoadState) {
                       return Center(
                           child: Lottie.asset("assets/lottie/loading.json"));
                     } else {
@@ -626,7 +637,7 @@ class Section3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(
       builder: (context, state) {
-        if (state is Successed12356State) {
+        if (state is Success12356State) {
           //  int? i = state.data.id;
          int? i1 = state.data.data?.student?.id;
           List<Widget> _children = [];
@@ -992,7 +1003,7 @@ class Section3 extends StatelessWidget {
               }
             },
           );
-        } else if (state is Loading1State) {
+        } else if (state is LoadState) {
           return const Center();
         } else {
           return const Text("");
@@ -1110,6 +1121,7 @@ class _LectCourseState extends State<LectCourse> {
                                     MediaQuery.of(context).size.width <
                                 1
                             ? Container(
+                              width: double.infinity,
                                 height:
                                     MediaQuery.of(context).size.height * 0.9,
                                 decoration: const BoxDecoration(
@@ -1143,6 +1155,7 @@ class _LectCourseState extends State<LectCourse> {
                                                   .width <
                                           1
                                       ? Container(
+                                        width: double.infinity,
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
@@ -1161,6 +1174,7 @@ class _LectCourseState extends State<LectCourse> {
                                             ),
                                           ))
                                       : Container(
+                                        width: double.infinity,
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
@@ -1307,6 +1321,7 @@ class _LectCourseState extends State<LectCourse> {
                                         MediaQuery.of(context).size.width <
                                     1
                                 ? Container(
+                                  width: double.infinity,
                                     height: MediaQuery.of(context).size.height *
                                         0.9,
                                     decoration: const BoxDecoration(

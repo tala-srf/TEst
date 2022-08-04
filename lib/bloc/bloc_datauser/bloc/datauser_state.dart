@@ -8,13 +8,13 @@ class DatauserInitial extends DatauserState {
 }
 
 // ignore: must_be_immutable
-class Successed12356State extends DatauserState {
+class Success12356State extends DatauserState {
   DataUserModel data;
-  Successed12356State({required this.data});
+  Success12356State({required this.data});
 }
 
-class NoConnectionState extends DatauserState {}
 
-class Loading1State extends DatauserState {}
 
-class EState extends DatauserState {}
+class LoadState extends DatauserState {}
+
+class E extends DatauserState {}

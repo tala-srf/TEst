@@ -125,7 +125,7 @@ class MainApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.toString() == 'EMPTY_TOKEN') {
-              return const Splash3UI();
+              return  SplashUI1();
             } else {
               return Home();
             }
@@ -135,9 +135,9 @@ class MainApp extends StatelessWidget {
         },
         future: tokenCall(),
       ),
-      duration: 3000,
+      duration: 3000,    
       imageSize: 130,
-      imageSrc: "assets/image/Asset 5 (2).png",
+      imageSrc: "assets/image/Asset5.png",
       backgroundColor: const Color(0xff7a489d),
     );
     return MaterialApp(

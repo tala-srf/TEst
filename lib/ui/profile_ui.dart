@@ -19,7 +19,7 @@ class ProfileUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<DatauserBloc>(context).add(LoaddataEvent());
+    BlocProvider.of<DatauserBloc>(context).add(LoaddatEvent());
     BlocProvider.of<AlluserBloc>(context).add(Loaddata1Event());
     BlocProvider.of<BadgeBloc>(context).add(LoadBadgeEvent());
     return MagicWidget(
@@ -201,9 +201,11 @@ class Section1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DatauserBloc, DatauserState>(
       builder: (context, state) {
-        if (state is Loading1State) {
+        if (state is LoadState) {
           return Center(child: Lottie.asset("assets/lottie/loading.json"));
-        } else if (state is Successed12356State) {
+        } else if (state is Success12356State) {
+      
+        String?  imge = state.data.data?.student?.images;
           return ListView.builder(
               itemCount: 1,
               itemBuilder: (context, index) {
@@ -212,20 +214,32 @@ class Section1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const CircleAvatar(
+                     CircleAvatar(
                       radius: 37,
-                      backgroundImage: AssetImage("assets/image/Avatar-20.png"),
+                      backgroundImage: NetworkImage(""),
                       backgroundColor: Colors.white,
+                      child: Container(decoration:    BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(37),
+                          ),
+                          color: Colors.white,
+                          image: DecorationImage(
+              image: imge == null ? NetworkImage("") :NetworkImage(imge) ,
+              fit: BoxFit.fill,
+              alignment: Alignment.center,
+            ),
+                        ),),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Container(
                         height: 25,
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(5),
                           ),
                           color: Colors.white,
+              
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(right: 5.0, left: 5),
@@ -264,14 +278,14 @@ class Center1 extends StatelessWidget {
               bottomLeft: Radius.circular(50), topLeft: Radius.circular(50))),
       child: BlocBuilder<DatauserBloc, DatauserState>(
         builder: (context, state) {
-          if (state is Loading1State) {
+          if (state is LoadState) {
             return Center(child: Lottie.asset("assets/lottie/loading.json"));
-          } else if (state is Successed12356State) {
+          } else if (state is Success12356State) {
             return ListView(children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("معلوماتي الشخصية",
                       style: TextStyle(
@@ -486,7 +500,7 @@ class Section2 extends StatelessWidget {
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 17,
+                                              fontSize: 11,
                                             )),
                                       ],
                                     ),
@@ -581,8 +595,8 @@ class Section2 extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Color(0xff75c4b5), //75c4b5
                                   image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/image/Avatar-20.png"),
+                                    image:
+                                        AssetImage("assets/image/Avatar2.png"),
                                   )),
                             ),
                             Container(
@@ -609,6 +623,7 @@ class Section2 extends StatelessWidget {
     );
   }
 }
+
 class Section3 extends StatelessWidget {
   Section3({
     Key? key,
@@ -677,7 +692,7 @@ class Section3 extends StatelessWidget {
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 17,
+                                              fontSize: 11,
                                             )),
                                       ],
                                     ),
@@ -772,8 +787,8 @@ class Section3 extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Color(0xff75c4b5), //75c4b5
                                   image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/image/Avatar-20.png"),
+                                    image:
+                                        AssetImage("assets/image/Avatar2.png"),
                                   )),
                             ),
                             Container(
