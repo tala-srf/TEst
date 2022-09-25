@@ -15,8 +15,6 @@ A new Flutter project.
 ![9](https://user-images.githubusercontent.com/58340907/192155647-252406d8-da77-478d-83de-96164953881e.jpg)
 ![8](https://user-images.githubusercontent.com/58340907/192155650-1e4f5bb6-f3cf-404d-a83e-7fdb87c91860.jpg)
 ![7](https://user-images.githubusercontent.com/58340907/192155651-d8c5ee45-4a2f-4d97-b97a-d0b10eee3097.jpg)
-![6](https://user-images.githubusercontent.com/58340907/192155653-cedf09b5-290e-4532-8922-928f0a499723.jpg)
-![5](https://user-images.githubusercontent.com/58340907/192155655-6d24d3df-1034-4f8e-af8b-14ab121b5389.jpg)
 ![4](https://user-images.githubusercontent.com/58340907/192155656-1ccf5915-3df9-438d-93b9-3d1fae4a9a20.jpg)
 
 
