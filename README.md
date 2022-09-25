@@ -1,7 +1,9 @@
 # ajyal
 
 A new Flutter project.
-![photo_2022-08-02_10-11-18](https://user-images.githubusercontent.com/58340907/192155623-b716feb6-458f-458a-b724-3492fd69dff9.jpg)
+![3](https://user-images.githubusercontent.com/58340907/192155657-22126e9f-1868-4ba5-9620-ffc133a2d1cc.jpg)
+![2](https://user-images.githubusercontent.com/58340907/192155659-5c57d747-a892-43f7-a801-38616b2a896b.jpg)
+![1](https://user-images.githubusercontent.com/58340907/192155660-1b41ed38-2e47-48df-8a39-be4d0449da39.jpg)
 ![photo_2022-08-02_10-10-58](https://user-images.githubusercontent.com/58340907/192155626-53f5c035-e11a-4f3b-abaa-37bbd16de8ec.jpg)
 ![16](https://user-images.githubusercontent.com/58340907/192155627-890ef339-01bd-4686-9a1e-afed74298ce0.jpg)
 ![15](https://user-images.githubusercontent.com/58340907/192155629-29a966e2-624c-40d3-a11a-d398d11f47fb.jpg)
@@ -16,9 +18,7 @@ A new Flutter project.
 ![6](https://user-images.githubusercontent.com/58340907/192155653-cedf09b5-290e-4532-8922-928f0a499723.jpg)
 ![5](https://user-images.githubusercontent.com/58340907/192155655-6d24d3df-1034-4f8e-af8b-14ab121b5389.jpg)
 ![4](https://user-images.githubusercontent.com/58340907/192155656-1ccf5915-3df9-438d-93b9-3d1fae4a9a20.jpg)
-![3](https://user-images.githubusercontent.com/58340907/192155657-22126e9f-1868-4ba5-9620-ffc133a2d1cc.jpg)
-![2](https://user-images.githubusercontent.com/58340907/192155659-5c57d747-a892-43f7-a801-38616b2a896b.jpg)
-![1](https://user-images.githubusercontent.com/58340907/192155660-1b41ed38-2e47-48df-8a39-be4d0449da39.jpg)
+
 
 ## Getting Started
 
